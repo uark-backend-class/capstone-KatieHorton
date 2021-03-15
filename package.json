@@ -1,0 +1,24 @@
+{
+  "name": "capstone-KatieHorton",
+  "version": "1.0.0",
+  "description": "Final Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uark-backend-class/capstone-KatieHorton.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/uark-backend-class/capstone-KatieHorton/issues"
+  },
+  "homepage": "https://github.com/uark-backend-class/capstone-KatieHorton#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.12.0"
+  }
+}

@@ -1,0 +1,14 @@
+<h1>{{ header }}</h1>
+<a href="/add">Add User</a>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Telephone</th>
+    <th></th>
+  </tr>
+  {{#each Users}}
+    <tr><td>{{ this.firstName }} {{ this.lastName }}</td><td>{{this.phone}}</td><td><button>Edit</button> <button>Delete</button></td></tr>
+  {{/each}}
+</table>
+<!-- Future HTML/Handlebars for rendering our User list -->
