@@ -1,33 +1,8 @@
 const mongoose = require('mongoose');
 
+mongoose.connect('mongodb+srv://Katie:SecretPassword0@userDb.znslh.mongodb.net/userDB?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.set('useFindAndModify', false);
 
 const db = mongoose.connection;
   
-  function createEventListeners() {
-    mongoose.connection.on('connected', () => {
-      console.log('Successfully connected to userDB.');
-    });
-  
-    mongoose.connection.on('disconnected', () => {
-      console.log('Database connection closed.');
-    });
-  
-    mongoose.connection.on('error', (err) => {
-      console.log(`Connection Failure: ${err}`);
-    });
-  }
-  
-  function connect() {
-    mongoose.connect(db, { useMongoClient: true });
-  }
-  
-  function disconnect() {
-    mongoose.disconnect();
-  }
-
-  module.exports = {
-    db,
-    createEventListeners,
-    connect,
-    disconnect
-  };
+db.on('open', () => { console.log('now magically connected to the userDB') });

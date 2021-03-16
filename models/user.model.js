@@ -1,21 +1,29 @@
 const mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
-const db = require('../db');
-
-mongoose.connect('mongodb+srv://Katie:SecretPassword0@userDb.znslh.mongodb.net/userDB?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
-mongoose.set('useFindAndModify', false);
-
 
 const userSchema = new mongoose.Schema({
     userName: String,
     password: String,
     firstName: String,
     lastName: String,
-    phoneNumber: Number,
-    email: String,
+    phone: Number,
+    eMail: String,
 
     created: { type: Date, default: Date.now }
   });
 
+  const User = mongoose.model('User', userSchema);
   
-module.exports = mongoose.model('User', userSchema);
+module.exports = User;
+
+
+const susan = new User({
+  userName: 'SusieQ',
+  firstName: 'Susan',
+  lastName: 'Susanator',
+  phone: 4445678,
+  eMail: 'SusieQ@yourmom.com'
+});
+
+susan.save(function(err) {
+  if (err) return handleError(err);
+});
