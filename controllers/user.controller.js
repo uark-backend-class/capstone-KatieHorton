@@ -8,7 +8,6 @@ exports.home = (req, res) => {
 //CREATE //UPDATE USER
 exports.create = async(req, res) => {
   console.log(req.body.userName);
-  console.log(req.body.password);
   console.log(req.body.firstName);
   console.log(req.body.lastName);
   console.log(req.body.phone);

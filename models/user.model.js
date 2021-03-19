@@ -1,26 +1,26 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    userName: String,
-    password: String,
-    firstName: String,
-    lastName: String,
-    phone: Number,
-    eMail: String,
-
+    _id: { ObjectId } ,
+    userName: { String, required: true},
+    firstName: { String, required: true },
+    lastName: { String, required: true },
+    phone: { Number, maxlength: 10 },
+    eMail: { String, unique: true, sparse: true },
+    githubId: { type: String, sparse: true },
     created: { type: Date, default: Date.now }
-  });
+  },   { timestamps: true }
+  );
 
-  const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
   
 module.exports = User;
 
 
 const susan = new User({
-  userName: 'SusieQ',
-  firstName: 'Susan',
+  userName: 'Susan',
   lastName: 'Susanator',
-  phone: 4445678,
+  phone: 444-5678,
   eMail: 'SusieQ@yourmom.com'
 });
 

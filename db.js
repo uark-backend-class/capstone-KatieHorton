@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const { URI } = require('./config/dev');
 
-mongoose.connect('mongodb+srv://Katie:SecretPassword0@userDb.znslh.mongodb.net/userDB?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(URI, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.set('useFindAndModify', false);
 
 const db = mongoose.connection;
