@@ -7,3 +7,5 @@ mongoose.set('useFindAndModify', false);
 const db = mongoose.connection;
   
 db.on('open', () => { console.log('now magically connected to the userDB') });
+
+module.exports = db;

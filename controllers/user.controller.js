@@ -1,9 +1,35 @@
 const User = require('../models/user.model');
 
-
+/*
 exports.home = (req, res) => {
   res.send('Welcome to MHC home page!');
 };
+const LogoutController = (req, res) => {
+  req.logout();
+  res.redirect("/");
+};
+
+const getUserController = (req, res) => {
+    
+    if(!req.user){
+        return res.status(401).json({error:'!unauthorized!', status:false})
+    }
+
+  res
+    .status(200)
+    .json({ status: true, msg: "Great Success!", user: req.user });
+};
+
+const githubLoginController = (req, res) => {
+  res.redirect("/");
+};
+
+module.exports = {
+  LogoutController,
+  getUserController,
+  githubLoginController,
+};
+*/
 
 //CREATE //UPDATE USER
 exports.create = async(req, res) => {
@@ -31,7 +57,7 @@ exports.deleteUser = async (req, res) => {
   res.redirect('/');
 };
 
-// LIST PAGE
+// LIST USER PAGE
 exports.listUsersPage = async (req, res) => {
   let mainHeader = "User List";
 
@@ -40,7 +66,7 @@ exports.listUsersPage = async (req, res) => {
   res.render('list', { header: mainHeader, Users });
 };
 
-// CREATE // UPDATE PAGE
+// CREATE // UPDATE USER PAGE
 exports.createUpdateUserPage = async (req, res) => {
 
   if (req.params._id) {
@@ -53,3 +79,24 @@ exports.createUpdateUserPage = async (req, res) => {
     res.render('create-update');
   }
 };
+
+exports.LogoutController = (req, res) => {
+  req.logout();
+  res.redirect("/");
+};
+
+exports.getUserController = (req, res) => {
+    
+    if(!req.user){
+        return res.status(401).json({error:'!unauthorized!', status:false})
+    }
+
+  res
+    .status(200)
+    .json({ status: true, msg: "Great Success!", user: req.user });
+};
+
+exports.githubLoginController = (req, res) => {
+  res.redirect("/");
+};
+
