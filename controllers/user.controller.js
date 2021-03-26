@@ -1,73 +1,53 @@
 const User = require('../models/user.model');
 
-/*
-exports.home = (req, res) => {
-  res.send('Welcome to MHC home page!');
-};
-const LogoutController = (req, res) => {
-  req.logout();
-  res.redirect("/");
-};
+const User = require("../models/user.model")
 
-const getUserController = (req, res) => {
-    
-    if(!req.user){
-        return res.status(401).json({error:'!unauthorized!', status:false})
-    }
+exports.register = async (req, res, next) => {
+  const user = new User({ email: req.body.email });
+  await User.register(user, req.body.password);
 
-  res
-    .status(200)
-    .json({ status: true, msg: "Great Success!", user: req.user });
+  next();
 };
 
-const githubLoginController = (req, res) => {
-  res.redirect("/");
-};
-
-module.exports = {
-  LogoutController,
-  getUserController,
-  githubLoginController,
-};
-*/
-
-//CREATE //UPDATE USER
-exports.create = async(req, res) => {
-  console.log(req.body.userName);
-  console.log(req.body.firstName);
-  console.log(req.body.lastName);
-  console.log(req.body.phone);
-  console.log(req.body.eMail);
+exports.create = async (req, res, next) => {
+  await User.find(req.body.id, req.body);
   if (req.body.id) {
-    await User.findOneAndUpdate(req.body.id, req.body);
+    req.flash('info', 'User updated!');
   }
-
   else {
-    const user = new User(req.body); 
+    const user = new User(req.body);
+    console.log(req.body.userName);
+    console.log(req.body.firstName);
+    console.log(req.body.lastName);
+    console.log(req.body.phone);
+    console.log(req.body.eMail);
     await user.save();
+    req.flash('info', 'User added!');
   }
-
   res.redirect('/');
 };
 
+
 // DELETE USER
-exports.deleteUser = async (req, res) => {
+exports.deleteUser = async(req, res) => {
   await User.findByIdAndDelete(req.params._id);
 
   res.redirect('/');
+  req.flash('info', 'User deleted!');
 };
 
 // LIST USER PAGE
-exports.listUsersPage = async (req, res) => {
-  let mainHeader = "User List";
+exports.listStudentsPage = async (req, res) => {
+  let students = await Student.find({}).lean();
+  let name = req.user ? req.user.name : 'Not logged in';
+  let flashes = [ ...req.flash('info'), ...req.flash('success') ];
 
-  let Users = await User.find({}).lean();
-
-  res.render('list', { header: mainHeader, Users });
-};
+  res.render('list', { header: mainHeader, students, name });
+  res.render('list', { header: mainHeader, students, name, flashes });
+}
 
 // CREATE // UPDATE USER PAGE
-exports.createUpdateUserPage = async (req, res) => {
+exports.createUpdateUserPage = async(req, res) => {
 
   if (req.params._id) {
     let user = await User.findById(req.params._id).lean();
@@ -77,26 +57,6 @@ exports.createUpdateUserPage = async (req, res) => {
 
   else {
     res.render('create-update');
+    req.flash('info', 'User updated!');
   }
 };
-
-exports.LogoutController = (req, res) => {
-  req.logout();
-  res.redirect("/");
-};
-
-exports.getUserController = (req, res) => {
-    
-    if(!req.user){
-        return res.status(401).json({error:'!unauthorized!', status:false})
-    }
-
-  res
-    .status(200)
-    .json({ status: true, msg: "Great Success!", user: req.user });
-};
-
-exports.githubLoginController = (req, res) => {
-  res.redirect("/");
-};
-

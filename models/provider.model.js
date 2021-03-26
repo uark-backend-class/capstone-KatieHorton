@@ -1,6 +1,6 @@
 const db = require('./db.js');
 
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 
 
 //DEFINE SCHEMA

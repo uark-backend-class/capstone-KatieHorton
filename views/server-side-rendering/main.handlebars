@@ -1,4 +1,12 @@
 <html>
+    {{#if flashes}}
+  {{#each flashes}}
+     <div class="alert alert-success">{{ this }}</div>
+  {{/each}}
+{{/if}}
+<h3>{{ name }} <a class="btn btn-secondary btn-sm" href="/logout">log out</a></h3>
+<h1>{{ header }}</h1>
+<p>
     <h1>Add a User</h1>
         <form action="/addUser" method="POST">
             <p>

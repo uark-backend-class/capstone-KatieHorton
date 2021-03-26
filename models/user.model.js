@@ -1,18 +1,20 @@
 const mongoose = require('mongoose');
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const userSchema = new mongoose.Schema({
-    _id: ObjectId,
-    userName: String, required: true,
-    firstName: String, required: true,
-    lastName: String, required: true,
-    phone: Number, maxlength: 10 ,
-    eMail: String, unique: true, sparse: true,
+  _id: ObjectId,
+    userName: String,
+    firstName: String,
+    lastName: String,
+    phone: Number,
+    eMail: String,
     githubId: { type: String, sparse: true },
     created: { type: Date, default: Date.now },
 },
-    { timestamps: true }
+  { timestamps: true }
 );
 
+userSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
 const User = mongoose.model('User', userSchema);
   
 module.exports = User;
