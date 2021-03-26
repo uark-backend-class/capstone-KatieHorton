@@ -1,10 +1,11 @@
-const { Router } = require("express");
+const router = require('express').Router();
 const passport = require('passport');
 const user = require('../controllers/user.controller');
 const auth = require('../controllers/auth.controller');
 
-router.get('/logout', LogoutController);
-router.get('/self', getUserController);
+router.get('/login', auth.loginPage);
+router.get('/logout', auth.logout);
+// router.get('/self', getUserController);
 router.get(
   '/github',
   passport.authenticate('github', { scope: ['user:email'] })
@@ -13,12 +14,11 @@ router.get(
 router.get(
   '/github/callback',
   passport.authenticate('github', {
-    failureRedirect: '/',
+    failureRedirect: '/login',
     failureFlash: 'failure!',
     successRedirect: '/',
     successFlash: 'Login win!'
-  }),
-  githubLoginController
+  })
 );
 
 router.use(auth.isAuthenticated);

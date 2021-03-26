@@ -1,7 +1,5 @@
 const User = require('../models/user.model');
 
-const User = require("../models/user.model")
-
 exports.register = async (req, res, next) => {
   const user = new User({ email: req.body.email });
   await User.register(user, req.body.password);
@@ -37,13 +35,12 @@ exports.deleteUser = async(req, res) => {
 };
 
 // LIST USER PAGE
-exports.listStudentsPage = async (req, res) => {
-  let students = await Student.find({}).lean();
+exports.listUsersPage = async (req, res) => {
+  let users = await User.find({}).lean();
   let name = req.user ? req.user.name : 'Not logged in';
   let flashes = [ ...req.flash('info'), ...req.flash('success') ];
 
-  res.render('list', { header: mainHeader, students, name });
-  res.render('list', { header: mainHeader, students, name, flashes });
+  res.render('list', { header: mainHeader, users, name, flashes });
 }
 
 // CREATE // UPDATE USER PAGE
