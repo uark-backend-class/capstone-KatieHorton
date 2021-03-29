@@ -1,11 +1,9 @@
 const db = require('./db.js');
 
 
-
-
 //DEFINE SCHEMA
-const { Schema } = mongoose;
 
+  
 const providerSchema = new Schema({
     _id: { ObjectId },
 
@@ -47,5 +45,9 @@ const providerSchema = new Schema({
         return this.find({ specialty: new RegExp(specialty, 'i') });
     }  */
 });
+const { Schema } = mongoose;
+const Provider = mongoose.model('Provider', providerSchema);
+Provider instanceof Provider;
+Provider._id = mongoose.Types.ObjectId;
 
 module.exports.Provider = mongoose.model('Provider', providerSchema);

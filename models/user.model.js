@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
+const { Schema } = mongoose;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-const userSchema = new mongoose.Schema({
+const UserSchema = mongoose.model({
     _id: ObjectId,
     firstName: String,
     lastName: String,
@@ -15,17 +16,26 @@ const userSchema = new mongoose.Schema({
 );
 
 userSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
-const User = mongoose.model('User', userSchema);
 
-module.exports = User;
+const User = new mongoose.model('User', UserSchema);
+User instanceof User;
+await User.save();
 
-/*const susan = new User({
-  userName: 'Susan',
+User.create({
+
+  firstName: 'Susan',
   lastName: 'Susanator',
   phone: 444-5678,
-  eMail: 'SusieQ@yourmom.com'
+  email: 'SusieQ@yourmom.com',
 });
 
-susan.save(function(err) {
-  if (err) return handleError(err);
-}); */
+console.log(newUser._id, newUser.firstName, newUser.lastName, newUser.phone, newUser.email);
+
+newUser.save();
+
+User.find(function (err, users) {
+  if (err) return console.error(err);
+  console.log(users);
+});
+
+module.exports = User;

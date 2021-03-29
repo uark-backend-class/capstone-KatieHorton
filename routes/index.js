@@ -5,7 +5,7 @@ const auth = require('../controllers/auth.controller');
 
 router.get('/login', auth.loginPage);
 router.get('/logout', auth.logout);
-// router.get('/self', getUserController);
+
 router.get(
   '/github',
   passport.authenticate('github', { scope: ['user:email'] })

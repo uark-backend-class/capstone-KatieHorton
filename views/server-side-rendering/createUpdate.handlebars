@@ -5,7 +5,7 @@
     First Name <input type='text' name='firstName' value='{{ user.firstName }}' /><br />
     Last Name <input type='text' name='lastName' value='{{ user.lastName }}' /><br />
     Phone <input type='tel' name='phone' value='{{ user.phone }}' /><br />
-    eMail <input type='email' name='phone' value='{{ user.phone }}' /><br />
+    email <input type='email' name='phone' value='{{ user.email }}' /><br />
     <input type='hidden' name='id' value='{{ user._id }}' /> <br/>
     <button type="submit">{{#if user}}Update{{else}}Add{{/if}} user</button>
   </p>

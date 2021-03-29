@@ -9,20 +9,16 @@ exports.register = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   await User.find(req.body.id, req.body);
-  if (req.body.id) {
-    req.flash('info', 'User updated!');
-  }
-  else {
+
     const user = new User(req.body);
-    console.log(req.body.userName);
     console.log(req.body.firstName);
     console.log(req.body.lastName);
     console.log(req.body.phone);
-    console.log(req.body.eMail);
+    console.log(req.body.email);
     await user.save();
     req.flash('info', 'User added!');
-  }
   res.redirect('/');
+  next();
 };
 
 

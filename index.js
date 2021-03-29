@@ -74,14 +74,12 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(express.json());
 app.use(routes);
 
+app.use(express.urlencoded());
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
-app.use(express.urlencoded());
-app.use(express.json());
-
-app.use(routes);
 
 app.listen(PORT, () => console.log(`Server listening on port: ${PORT}`));

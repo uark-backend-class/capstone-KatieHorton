@@ -1,43 +1,10 @@
-<html>
-    {{#if flashes}}
-  {{#each flashes}}
-     <div class="alert alert-success">{{ this }}</div>
-  {{/each}}
-{{/if}}
-<h3>{{ name }} <a class="btn btn-secondary btn-sm" href="/logout">log out</a></h3>
-<h1>{{ header }}</h1>
-<p>
-    <h1>Add a User</h1>
+  <h1>Add a User</h1>
         <form action="/addUser" method="POST">
             <p>
-                User Name <input type='text' name='userName' /><br />
                 First Name <input type='text' name='firstName' /><br />
                 Last Name <input type='text' name='lastName' /><br />
                 Phone <input type='tel' name='phone' /><br />
                 eMail <input type='text' name='email' /><br />
-            <button type="submit">Add User</button>
-        </p>
-    </form>
-</html>
-
-<html>
-    <h1>Add a Provider</h1>
-    <h2>This service does not provide or replace the consultation, guidance, or care of a health care professional 
-or other qualified provider. This service provides a supplement for informational and educational purposes only. 
-Health care professionals and other qualified providers should continue to consult authoritative records 
-when making decisions.</h2>
-        <form action="/addUser" method="POST">
-            <p>
-                Provider Name <input type='text' name='name' /><br />
-                First Name <input type='text' name='firstName' /><br />
-                Last Name <input type='text' name='lastName' /><br />
-                Specialty <input type='text' name='specialty' /><br />
-                Phone <input type='tel' name='phone' /><br />
-                eMail <input type='text' name='email' /><br />
-                address <input type = 'text' name = 'address' /><br />
-                reviews
-                insurance accepted
-
             <button type="submit">Add User</button>
         </p>
     </form>
