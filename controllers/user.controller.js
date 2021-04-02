@@ -36,7 +36,8 @@ exports.listUsersPage = async (req, res) => {
   let name = req.user ? req.user.name : 'Not logged in';
   let flashes = [ ...req.flash('info'), ...req.flash('success') ];
 
-  res.render('list', { header: mainHeader, users, name, flashes });
+  res.render('list', { header: mainHeader, users, name, flashes 
+  });
 }
 
 // CREATE // UPDATE USER PAGE
@@ -49,7 +50,8 @@ exports.createUpdateUserPage = async(req, res) => {
   }
 
   else {
-    res.render('create-update');
+    res.render('create-update page');
     req.flash('info', 'User updated!');
   }
 };
+

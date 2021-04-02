@@ -17,6 +17,7 @@ exports.Provider.addProvider = async(req, res, next) => {
     next();
 };
 
+
 exports.Provider.getAll = async(req, res) => {
     const providers = await Provider.find({});
     res.send([ providers ]);

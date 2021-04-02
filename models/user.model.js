@@ -1,41 +1,30 @@
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 const passportLocalMongoose = require('passport-local-mongoose');
-const { Schema } = mongoose;
-const ObjectId = mongoose.Schema.Types.ObjectId;
+const db = require('../db');
+const { URI } = require('../config/dev');
 
-const UserSchema = mongoose.model({
-    _id: ObjectId,
+
+mongoose.connect(URI, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.set('useFindAndModify', false);
+
+db.on('open', async() => { 
+  console.log('now magically connected to the userDB');
+
+const userSchema = mongoose.Schema({
     firstName: String,
     lastName: String,
-    phone: Number,
+    phone: String,
     email: String,
     githubId: { type: String, sparse: true },
-    created: { type: Date, default: Date.now },
+    created: { type: Date, default: Date.now }
   },
+
   { timestamps: true }
 );
 
 userSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
 
-const User = new mongoose.model('User', UserSchema);
-User instanceof User;
-await User.save();
+module.exports = mongoose.model('User', userSchema);
 
-User.create({
-
-  firstName: 'Susan',
-  lastName: 'Susanator',
-  phone: 444-5678,
-  email: 'SusieQ@yourmom.com',
 });
-
-console.log(newUser._id, newUser.firstName, newUser.lastName, newUser.phone, newUser.email);
-
-newUser.save();
-
-User.find(function (err, users) {
-  if (err) return console.error(err);
-  console.log(users);
-});
-
-module.exports = User;

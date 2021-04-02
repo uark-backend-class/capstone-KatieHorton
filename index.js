@@ -1,9 +1,15 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const routes = require('./routes');
-const config = require('./config/dev');
+
 const GithubStrategy = require('passport-github2');
 const User = require('./models/user.model');
+const {
+  URI,
+  GITHUB_CLIENT_ID,
+  GITHUB_CLIENT_SECRET,
+  GITHUB_CALLBACK_URL,
+} = require("./config/dev");
 
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
@@ -16,11 +22,11 @@ const app = express();
 
 app.use(
   session({
-    secret: "random pineapple",
+    secret: "Jupiter",
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-      mongoUrl: config.URI,
+      mongoUrl: URI,
       autoRemove: "interval",
       autoRemoveInterval: 10,
     }),
@@ -29,9 +35,9 @@ app.use(
 passport.use(
   new GithubStrategy(
     {
-      clientID: '4efd531dc76f8913898a',
-      clientSecret: '09025fcc63fd83d27df80a8be543437fe0cca5e0',
-      callbackURL: 'http://localhost:3000/auth/github/callback',
+      clientID: GITHUB_CLIENT_ID,
+      clientSecret: GITHUB_CLIENT_SECRET,
+      callbackURL: GITHUB_CALLBACK_URL,
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
@@ -58,10 +64,8 @@ passport.use(
 )
 
 
-passport.use(User.createStrategy());
-
 passport.serializeUser((user, done) => {
-  done(null, user._id);
+    done(null, user._id);
 });
 
 passport.deserializeUser(async (id, done) => {
