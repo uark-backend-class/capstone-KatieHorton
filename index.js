@@ -1,7 +1,6 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const routes = require('./routes');
-
 const GithubStrategy = require('passport-github2');
 const User = require('./models/user.model');
 const {
@@ -10,13 +9,12 @@ const {
   GITHUB_CLIENT_SECRET,
   GITHUB_CALLBACK_URL,
 } = require("./config/dev");
-
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const passport = require("./services/passport");
 const flash = require('connect-flash');
-
-const PORT = 3000;
+const isAuth = require('./auth/isAuthenticated');
+const port = 3000;
 
 const app = express();
 
@@ -61,9 +59,9 @@ passport.use(
       }
     }
   )
-)
+);
 
-
+passport.use('local auth', isAuth);
 passport.serializeUser((user, done) => {
     done(null, user._id);
 });
@@ -86,4 +84,4 @@ app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
 
-app.listen(PORT, () => console.log(`Server listening on port: ${PORT}`));
+app.listen(port, () => console.log(`Server listening on port: ${port}`));

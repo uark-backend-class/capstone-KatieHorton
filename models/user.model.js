@@ -3,9 +3,10 @@ mongoose.Promise = global.Promise;
 const passportLocalMongoose = require('passport-local-mongoose');
 const db = require('../db');
 const { URI } = require('../config/dev');
+const { user } = require('../db');
 
-
-mongoose.connect(URI, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.set('useCreateIndex', true);
+mongoose.connect( "mongodb+srv://Katie:SecretAgentC4t@mhc-project.znslh.mongodb.net/mhc-project?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.set('useFindAndModify', false);
 
 db.on('open', async() => { 
@@ -26,5 +27,6 @@ const userSchema = mongoose.Schema({
 userSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
 
 module.exports = mongoose.model('User', userSchema);
+
 
 });

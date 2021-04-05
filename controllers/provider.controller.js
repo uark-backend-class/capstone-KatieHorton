@@ -1,10 +1,8 @@
-const  Provider = require('./models/provider.model.js');
+const  Provider = require('../models/provider.model.js');
 const db = require('../db');
 
-db.on('open', () => { console.log('now magically connected to the providerDB') });
-
 //create
-exports.Provider.addProvider = async(req, res, next) => {
+exports.addProvider = async(req, res, next) => {
     const provider = req.body;
 
     console.log(req.body.name);
@@ -13,28 +11,26 @@ exports.Provider.addProvider = async(req, res, next) => {
   
     await provider.save();
     if (err) return handleError(err);
-    res.send(`${provider.firstName} added`);
+    res.send(`provider added`);
     next();
 };
 
 
-exports.Provider.getAll = async(req, res) => {
+exports.getAll = async(req, res) => {
     const providers = await Provider.find({});
     res.send([ providers ]);
 };
 
-//addProvider({ name: 'Dr. Jones' , specialty: 'Pediatrics', zip: 72719});
-
  //find by Id
-exports.Provider.findById = async(req, res) => {
-    const foundProvider =  await findById(Provider._id).exec((err, provider) => {
+exports.findById = async(req, res) => {
+    const foundProvider =  await findById(Provider._id).exec((err) => {
      if(err) return handleError(err);
     res.send(foundProvider);
   })
 };
 
 //find by specialty
-exports.Provider.findBySpecialty = async(req, res, err) => {
+exports.findBySpecialty = async(req, res, err) => {
     const specialist = await db.Provider.find.where('specialty').equals(query.params);
     if (err) return handleError(err);
     res.send(`${specialist.name}: ${specialist.specialty} may meet your needs`);
@@ -42,7 +38,7 @@ exports.Provider.findBySpecialty = async(req, res, err) => {
 
 
 //update provider
-exports.Provider.findOneAndUpdate = async(req, res, err) => {
+exports.findOneAndUpdate = async(req, res, err) => {
     const updatedProvider = awaitProvider.findById(query.params);
   if (err) return handleError(err);
    let results = req.body;
@@ -57,7 +53,7 @@ exports.Provider.findOneAndUpdate = async(req, res, err) => {
 
 
 //remove provider
-exports.Provider.findByIdAndDelete = async(req, res) => {
+exports.findByIdAndDelete = async(req, res) => {
     let providerIndex = await Provider.findById(Provider => Provider._id == req.query.id);
   
     if (providerIndex == -1) {

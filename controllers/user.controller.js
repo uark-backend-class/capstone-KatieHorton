@@ -1,5 +1,12 @@
 const User = require('../models/user.model');
 
+
+exports.getAll = async(req, res, err) => {
+  if (err) handleError(err);
+  allUsers = await User.find({});
+  console.log(allUsers);
+};
+
 exports.register = async (req, res, next) => {
   const user = new User({ email: req.body.email });
   await User.register(user, req.body.password);

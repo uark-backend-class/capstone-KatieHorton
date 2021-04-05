@@ -2,7 +2,7 @@ const User = require('../models/user.model');
 const passport = require('passport');
 const router = require('../routes');
 
-router.post('/signup', (req, res, next) => {
+router.post('/register', (req, res, next) => {
   User.register(new User({
       username: req.body.username
     }),
@@ -14,10 +14,10 @@ router.post('/signup', (req, res, next) => {
           err: err
         });
       } else {
-        passport.authenticate('local')(req, res, () => {
+        passport.authenticate('/users/:userName')(req, res, () => {
           User.findOne({
             username: req.body.username
-          }, (err, person) => {
+          }, (err,user) => {
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
             res.json({
@@ -56,7 +56,7 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
         }
       });
     } else {
-      var err = new Error('You are not logged in!');
+      const err = new Error('You are not logged in!');
       err.status = 403;
       next(err);
     }
