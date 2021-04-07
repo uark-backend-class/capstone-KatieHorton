@@ -8,8 +8,13 @@ exports.getAll = async(req, res, err) => {
 };
 
 exports.register = async (req, res, next) => {
-  const user = new User({ email: req.body.email });
-  await User.register(user, req.body.password);
+  const user = new User({ 
+    firstName: req.body.firstName, 
+    lastName: req.body.lastName,
+    phone: req.body.phone,
+    email: req.body.email,
+    password: req.body.password });
+  await User.register(user);
 
   next();
 };
@@ -35,6 +40,7 @@ exports.deleteUser = async(req, res) => {
 
   res.redirect('/');
   req.flash('info', 'User deleted!');
+  next();
 };
 
 // LIST USER PAGE
@@ -44,11 +50,12 @@ exports.listUsersPage = async (req, res) => {
   let flashes = [ ...req.flash('info'), ...req.flash('success') ];
 
   res.render('list', { header: mainHeader, users, name, flashes 
+  next();
   });
 }
 
 // CREATE // UPDATE USER PAGE
-exports.createUpdateUserPage = async(req, res) => {
+exports.createUpdateUserPage = async(req, res, next) => {
 
   if (req.params._id) {
     let user = await User.findById(req.params._id).lean();
@@ -60,5 +67,6 @@ exports.createUpdateUserPage = async(req, res) => {
     res.render('create-update page');
     req.flash('info', 'User updated!');
   }
+  next();
 };
 

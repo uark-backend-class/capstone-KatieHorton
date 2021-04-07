@@ -18,6 +18,7 @@ const userSchema = mongoose.Schema({
     phone: String,
     email: String,
     githubId: { type: String, sparse: true },
+    password: String,
     created: { type: Date, default: Date.now }
   },
 
