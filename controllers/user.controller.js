@@ -3,17 +3,19 @@ const User = require('../models/user.model');
 
 exports.getAll = async(req, res, err) => {
   if (err) handleError(err);
-  allUsers = await User.find({});
+  allUsers = await User.find({}).lean();
   console.log(allUsers);
 };
 
 exports.register = async (req, res, next) => {
-  const user = new User({ 
+  const user = new User(
+    { 
     firstName: req.body.firstName, 
     lastName: req.body.lastName,
     phone: req.body.phone,
     email: req.body.email,
-    password: req.body.password });
+    password: req.body.password 
+  });
   await User.register(user);
 
   next();
@@ -49,21 +51,19 @@ exports.listUsersPage = async (req, res) => {
   let name = req.user ? req.user.name : 'Not logged in';
   let flashes = [ ...req.flash('info'), ...req.flash('success') ];
 
-  res.render('list', { header: mainHeader, users, name, flashes 
-  next();
-  });
+  res.render('list', { header: mainHeader, users, name, flashes });
 }
 
 // CREATE // UPDATE USER PAGE
 exports.createUpdateUserPage = async(req, res, next) => {
 
-  if (req.params._id) {
-    let user = await User.findById(req.params._id).lean();
+  if (req.params.id) {
+    let user = await User.findById(req.params.id).lean();;
 
     res.render('create-update', { user });
   }
 
-  else {
+  else {  
     res.render('create-update page');
     req.flash('info', 'User updated!');
   }

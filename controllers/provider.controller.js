@@ -1,22 +1,19 @@
 const  Provider = require('../models/provider.model.js');
 const db = require('../db');
 const mongoose = require('mongoose');
+const MongoClient = require('mongodb').MongoClient;
 
-Provider.find({});
+MongoClient.connect('mongodb://localhost:3000/providers', { useUnifiedTopology: true }, function(err, client){
+   if(err) throw err;
+
+   db.collection('providers').find().toArray(function(err, result){
+     if(err) throw err;
+     console.log(result);
+     client.close();
+   });
+});
+
 //create
-
-exports.Provider.register= async(req, res, next) => ({
-  const provider = new Provider({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    phone: req.body.phone,
-    zip: req.body.zip
-  }),
-  await Provider.register(provider/*, req.body.password*/, req.body),
-  next();
-}
-,
 exports.addProvider = async(req, res, next) => {
     const provider = req.body;
 
