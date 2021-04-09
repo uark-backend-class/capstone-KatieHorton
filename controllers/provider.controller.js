@@ -22,7 +22,7 @@ exports.addProvider = async(req, res, next) => {
     console.log(req.body.contact.email);
     console.log(req.body.contact.phoneNumber);
     console.log(req.body.zip);
-  
+
     await provider.save();
     if (err) return handleError(err);
     res.send(`provider added`);
@@ -47,7 +47,7 @@ exports.findBySpecialty = async(req, res, err) => {
     const specialist = await db.Provider.find.where('specialty').equals(query.params);
     if (err) return handleError(err);
     res.send(`Dr. ${specialist.name}, Specialty:${specialist.specialty} may meet your needs`);
-}; 
+};
 
 
 //update
@@ -64,19 +64,28 @@ exports.findOneAndUpdate = async(req, res, err) => {
  console.log(updatedProvider);
 };
 
+exports.addComment = async (req, res) => {
+  let provider = await Provider.findById(req.params.id);
+
+  // pseudo code, need to get the comment test
+  provider.comments.push({ body: "test comment", date: new Date(), author: req.user._id });
+
+  // decide where to redirect
+  res.redirect('/providers/' + provider._id);
+}
 
 //delete
 exports.findByIdAndDelete = async(req, res) => {
-    let providerIndex = await Provider.findById(Provider => Provider._id == req.query.id);
-  
+    let providerIndex = await Provider.findById(req.params.id);
+
     if (providerIndex == -1) {
       res.status(404).send();
       return;
     }
     else {
       let deletedProvider = Provider.splice(providerIndex, 1);
-  
-    res.send(`${deletedProvider.name} deleted.`);
+
+      res.send(`${deletedProvider.name} deleted.`);
     }
 };
 exports.home = (req, res) => {
