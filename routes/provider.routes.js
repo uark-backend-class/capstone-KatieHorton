@@ -3,13 +3,12 @@ const router = express().Router;
 const provider = require('../controllers/provider.controller');
 
 
-router.get('/providers', provider.getAll);
-router.post('/providers', provider.addProvider);
-
-router.get('/providers/:id', provider.getOne);
-router.put('/providers/:id', provider.updateProvider);
-router.delete('/providers/:id', provider.deleteProvider);
-
-router.get('/providers/:specialty', provider.findBySpecialty);
+router.use(auth.isAuthenticated);
+router.get('/', provider.listProvidersPage);
+router.get('/create', provider.createUpdateProviderPage);
+router.post('/createUpdate', auth.isAuthenticated,  provider.create);
+router.get('/update/:id', providProvider);
+router.delete('/provider/:id', provider.deleteProvider);
+router.get('/secrets', (req, res) => res.send('Super secret nonsense!'));
 
 module.exports = router;

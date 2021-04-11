@@ -18,7 +18,7 @@ exports.register = async (req, res, next) => {
   });
   await User.register(user);
 
-  next();
+  next();//pass to auth controller
 };
 
 exports.create = async (req, res, next) => {

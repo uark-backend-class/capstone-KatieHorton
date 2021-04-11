@@ -1,9 +1,5 @@
 const mongoose = require('mongoose');
 const db = require('../db');
-const { URI } = require('../config/dev');
-
-mongoose.connect(URI, {useNewUrlParser: true, useUnifiedTopology: true});
-mongoose.set('useFindAndModify', false);
 
 db.on('open', async() => { 
   console.log('Magically connected to the providerDB');
@@ -24,20 +20,34 @@ const providerSchema = new mongoose.Schema({
 
     contact: {
         email: {
-            type: String
+            type: String,
+            maxlength: 30
         },
         phone: { 
-            type: String
+            type: String,
+            maxlength: 10
         }
 
     },
 
     zip: {
         type: Number,
-        required: 'please enter zip code',
+        maxlength: 5
+    },
+    /*
+    address: {
+        type: String,
+        required: 'Please enter Practice address',
         length: 5
+    },
+
+   reviews: { 
+       type: [{}, {}, {}]
     }
+*/
+
 });
+
 exports.Provider = mongoose.model('Provider', providerSchema);
-console.log(this.Provider.find({}));
+
 });

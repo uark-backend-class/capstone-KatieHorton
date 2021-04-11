@@ -1,84 +1,75 @@
-const  Provider = require('../models/provider.model.js');
-const db = require('../db');
-const mongoose = require('mongoose');
-const MongoClient = require('mongodb').MongoClient;
+const  Provider = require('../models/provider.model');
+const User = require('../models/user.model');
 
-MongoClient.connect('mongodb://localhost:3000/providers', { useUnifiedTopology: true }, function(err, client){
-   if(err) throw err;
 
-   db.collection('providers').find().toArray(function(err, result){
-     if(err) throw err;
-     console.log(result);
-     client.close();
-   });
-});
-
-//create
-exports.addProvider = async(req, res, next) => {
-    const provider = req.body;
-
-    console.log(req.body.name);
-    console.log(req.body.specialty);
-    console.log(req.body.contact.email);
-    console.log(req.body.contact.phoneNumber);
-    console.log(req.body.zip);
-  
-    await provider.save();
-    if (err) return handleError(err);
-    res.send(`provider added`);
-    next();
-};
 // read
-exports.getAll = async(req, res) => {
-  const providers = await Provider.find({});
+exports.getAll = async (req, res) => {
+  const providers = await Provider.find({}).lean();
   res.send([ providers ]);
-};
+}
 
- //find by Id
-exports.findById = async(req, res) => {
-    const foundProvider =  await findById(Provider._id).exec((err) => {
+//find by Id
+exports.findById = async (req, res) => {
+    const foundProvider =  await findById(Provider.id).lean(); {
      if(err) return handleError(err);
     res.send(foundProvider);
-  })
-};
+  }
+}
 
-//find by specialty
-exports.findBySpecialty = async(req, res, err) => {
-    const specialist = await db.Provider.find.where('specialty').equals(query.params);
-    if (err) return handleError(err);
-    res.send(`Dr. ${specialist.name}, Specialty:${specialist.specialty} may meet your needs`);
+// CREATE/UPDATE
+exports.addProvider = async (req, res) => {
+  console.log(req.body.firstName);
+  console.log(req.body.lastName);
+  console.log(req.body.specialty);
+  console.log(req.body.email);
+  console.log(req.body.phone);
+
+  if (req.body.id) {
+    await Provider.findByIdAndUpdate(req.body.id, req.body);
+    req.flash('info', 'Provider updated!');
+  }
+  else {
+    const provider = new Provider(req.body); 
+    await provider.save();
+    req.flash('info', 'Provider added!');
+  }
+
+  res.redirect('/');
+}
+
+//FIND BY SPECIALTY
+exports.findBySpecialty = async (req, res, err) => {
+  const specialist = await db.Provider.find.where('specialty').equals(req.query.params);
+  if (err) return handleError(err);
+  res.send(`Dr. ${specialist.name}, Specialty:${specialist.specialty} may meet your needs`);
 }; 
 
+//DELETE
+exports.deleteProvider = async (req, res) => {
+  await Provider.findByIdAndDelete(req.params.id);
 
-//update
-exports.findOneAndUpdate = async(req, res, err) => {
-    const updatedProvider = awaitProvider.findById(query.params);
-  if (err) return handleError(err);
-   let results = req.body;
+  res.redirect('/');
+}
 
-   for (let [prop] in results) {
-       updatedProvider[prop] = results[prop];
-       res.send (updatedProvider[0]);
-   }
+exports.listProvidersPage = async (req, res) => {
+  let mainHeader = "Provider List";
 
- console.log(updatedProvider);
-};
-
-
-//delete
-exports.findByIdAndDelete = async(req, res) => {
-    let providerIndex = await Provider.findById(Provider => Provider._id == req.query.id);
+  let providers = await Provider.find({}).lean();
   
-    if (providerIndex == -1) {
-      res.status(404).send();
-      return;
-    }
-    else {
-      let deletedProvider = Provider.splice(providerIndex, 1);
-  
-    res.send(`${deletedProvider.name} deleted.`);
-    }
-};
-exports.home = (req, res) => {
-  res.send('welcome to home page, please insert information.');
-};
+  let name = req.user ? req.user.name : 'Not logged in';
+  let flashes = [ ...req.flash('info'), ...req.flash('success') ];
+
+  res.render('list', { header: mainHeader, providers, name, flashes });
+}
+
+exports.addUpdateProviderPage = async (req, res) => {
+  if (req.params._id) {
+    let provider = await Provider.findById(req.params.id).lean();
+
+    res.render('add-update', { provider });
+  }
+
+  else {
+    res.render('add-update');
+  }
+}
