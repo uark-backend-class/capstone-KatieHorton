@@ -65,7 +65,7 @@ exports.createUpdateUserPage = async(req, res, next) => {
 
   else {  
     res.render('create-update page');
-    req.flash('info', 'User updated!');
+    req.flash('info', 'User updated!'); 
   }
   next();
 };
