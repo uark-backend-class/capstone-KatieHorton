@@ -2,6 +2,31 @@ const  Provider = require('../models/provider.model');
 const User = require('../models/user.model');
 
 
+<<<<<<< HEAD
+=======
+   db.collection('providers').find().toArray(function(err, result){
+     if(err) throw err;
+     console.log(result);
+     client.close();
+   });
+});
+
+//create
+exports.addProvider = async(req, res, next) => {
+    const provider = req.body;
+
+    console.log(req.body.name);
+    console.log(req.body.specialty);
+    console.log(req.body.contact.email);
+    console.log(req.body.contact.phoneNumber);
+    console.log(req.body.zip);
+
+    await provider.save();
+    if (err) return handleError(err);
+    res.send(`provider added`);
+    next();
+};
+>>>>>>> 10bfd3aca8df289b92dd0a2e0453f59ee842d6df
 // read
 exports.getAll = async (req, res) => {
   const providers = await Provider.find({}).lean();
@@ -16,6 +41,7 @@ exports.findById = async (req, res) => {
   }
 }
 
+<<<<<<< HEAD
 // CREATE/UPDATE
 exports.addProvider = async (req, res) => {
   console.log(req.body.firstName);
@@ -33,6 +59,14 @@ exports.addProvider = async (req, res) => {
     await provider.save();
     req.flash('info', 'Provider added!');
   }
+=======
+//find by specialty
+exports.findBySpecialty = async(req, res, err) => {
+    const specialist = await db.Provider.find.where('specialty').equals(query.params);
+    if (err) return handleError(err);
+    res.send(`Dr. ${specialist.name}, Specialty:${specialist.specialty} may meet your needs`);
+};
+>>>>>>> 10bfd3aca8df289b92dd0a2e0453f59ee842d6df
 
   res.redirect('/');
 }
@@ -51,6 +85,7 @@ exports.deleteProvider = async (req, res) => {
   res.redirect('/');
 }
 
+<<<<<<< HEAD
 exports.listProvidersPage = async (req, res) => {
   let mainHeader = "Provider List";
 
@@ -73,3 +108,32 @@ exports.addUpdateProviderPage = async (req, res) => {
     res.render('add-update');
   }
 }
+=======
+exports.addComment = async (req, res) => {
+  let provider = await Provider.findById(req.params.id);
+
+  // pseudo code, need to get the comment test
+  provider.comments.push({ body: "test comment", date: new Date(), author: req.user._id });
+
+  // decide where to redirect
+  res.redirect('/providers/' + provider._id);
+}
+
+//delete
+exports.findByIdAndDelete = async(req, res) => {
+    let providerIndex = await Provider.findById(req.params.id);
+
+    if (providerIndex == -1) {
+      res.status(404).send();
+      return;
+    }
+    else {
+      let deletedProvider = Provider.splice(providerIndex, 1);
+
+      res.send(`${deletedProvider.name} deleted.`);
+    }
+};
+exports.home = (req, res) => {
+  res.send('welcome to home page, please insert information.');
+};
+>>>>>>> 10bfd3aca8df289b92dd0a2e0453f59ee842d6df

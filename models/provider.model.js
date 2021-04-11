@@ -1,13 +1,17 @@
 const mongoose = require('mongoose');
+<<<<<<< HEAD
 const db = require('../db');
 
 db.on('open', async() => { 
   console.log('Magically connected to the providerDB');
+=======
+const User = require('../user.model');
+>>>>>>> 10bfd3aca8df289b92dd0a2e0453f59ee842d6df
 
 //DEFINE SCHEMA
 const providerSchema = new mongoose.Schema({
     name:  {
-        type: String, 
+        type: String,
         required: 'please enter provider name',
         maxlength: 100
     },
@@ -23,9 +27,14 @@ const providerSchema = new mongoose.Schema({
             type: String,
             maxlength: 30
         },
+<<<<<<< HEAD
         phone: { 
             type: String,
             maxlength: 10
+=======
+        phone: {
+            type: String
+>>>>>>> 10bfd3aca8df289b92dd0a2e0453f59ee842d6df
         }
 
     },
@@ -41,6 +50,7 @@ const providerSchema = new mongoose.Schema({
         length: 5
     },
 
+<<<<<<< HEAD
    reviews: { 
        type: [{}, {}, {}]
     }
@@ -51,3 +61,15 @@ const providerSchema = new mongoose.Schema({
 exports.Provider = mongoose.model('Provider', providerSchema);
 
 });
+=======
+    comments : [
+        {
+            body: String,
+            date: Date,
+            author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+        }
+    ]
+});
+
+exports.Provider = mongoose.model('Provider', providerSchema);
+>>>>>>> 10bfd3aca8df289b92dd0a2e0453f59ee842d6df
