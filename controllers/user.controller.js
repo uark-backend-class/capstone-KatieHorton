@@ -57,8 +57,8 @@ exports.listUsersPage = async (req, res) => {
 // CREATE // UPDATE USER PAGE
 exports.createUpdateUserPage = async(req, res, next) => {
 
-  if (req.params.id) {
-    let user = await User.findById(req.params.id).lean();;
+  if (req.params._id) {
+    let user = await User.findById(req.params._id).lean();;
 
     res.render('create-update', { user });
   }

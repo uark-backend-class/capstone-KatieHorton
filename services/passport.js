@@ -1,7 +1,7 @@
 const passport = require('passport');
 const GithubStrategy = require('passport-github2');
 
-const User = require('../models/user.model');
+const provider = require('../models/provider.model');
 
 const {
   GITHUB_CLIENT_ID,
@@ -9,14 +9,14 @@ const {
   GITHUB_CALLBACK_URL,
 } = require('../config');
 
-passport.serializeUser((user, done) => {
-  done(null, user._id);
+passport.serializeProvider((provider, done) => {
+  done(null, provider._id);
 });
 
-passport.deserializeUser(async (id, done) => {
+passport.deserializeProvider(async (id, done) => {
   try {
-    let user = await User.findById(id, 'name email _id');
-    done(null, user);
+    let provider = await provider.findById(id, 'name email _id');
+    done(null, provider);
   } catch (error) {
     done(error, null);
   }
@@ -31,20 +31,20 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        const user = await User.findOne({ githubId: profile.id });
+        const provider = await provider.findOne({ githubId: profile.id });
 
-        if (user) {
-          return done(null, user);
+        if (provider) {
+          return done(null, provider);
         } else {
-          const newUser = new User({
+          const newprovider = new provider({
             email: profile.email,
             name: profile.displayName,
             githubId: profile.id,
           });
 
-          const savedUser = await newUser.save();
+          const savedprovider = await newprovider.save();
 
-          done(null, savedUser);
+          done(null, savedprovider);
         }
       } catch (error) {
         done(error);

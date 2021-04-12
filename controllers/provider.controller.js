@@ -1,12 +1,6 @@
 const  Provider = require('../models/provider.model');
 const User = require('../models/user.model');
-
-
-   db.collection('providers').find().toArray(function(err, result){
-     if(err) throw err;
-     console.log(result);
-     client.close();
-   });
+const db = require('../db');
 
 // GET ALL
 exports.getAll = async (req, res) => {
@@ -33,6 +27,15 @@ exports.addProvider = async (req, res) => {
   }
 }
 
+exports.addComment = async (req, res) => {
+  let provider = await Provider.findById(req.params.id);
+
+  // pseudo code, need to get the comment test
+  provider.comments.push({ body: "test comment", date: new Date(), author: req.user._id });
+
+  // decide where to redirect
+  res.redirect('/providers/' + provider._id);
+}
 
 //FIND BY ID
 exports.findById = async (req, res) => {
@@ -68,7 +71,7 @@ exports.listProvidersPage = async (req, res) => {
 }
 
 exports.addUpdateProviderPage = async (req, res) => {
-  if (req.params._id) {
+  if (req.params.id) {
     let provider = await Provider.findById(req.params.id).lean();
 
     res.render('add-update', { provider });

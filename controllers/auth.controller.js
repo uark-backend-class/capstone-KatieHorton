@@ -5,12 +5,12 @@ exports.LogoutController = (req, res) => {
   res.redirect('/');
 };
 
-exports.getUserController = (req, res) => {
-  if (!req.user) {
+exports.getProviderController = (req, res) => {
+  if (!req.provider) {
     return res.status(401).json({ error: '!unauthorized!', status: false });
   }
 
-  res.status(200).json({ status: true, msg: 'Great Success!', user: req.user });
+  res.status(200).json({ status: true, msg: 'Great Success!', provider: req.provider });
 };
 
 exports.githubLoginController = (req, res) => {

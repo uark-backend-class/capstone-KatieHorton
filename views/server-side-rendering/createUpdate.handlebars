@@ -1,12 +1,12 @@
-<h1>{{#if user}}Update{{else}}Add{{/if}} a user</h1>
-<form action="/adduser" method="POST">
+<h1>{{#if provider}}Update{{else}}Add{{/if}} a provider</h1>
+<form action="/addUpdate" method="POST">
   <p>
-    User Name <input type='text' name='firstName' value='{{ user.firstName }}' /><br />
-    First Name <input type='text' name='firstName' value='{{ user.firstName }}' /><br />
-    Last Name <input type='text' name='lastName' value='{{ user.lastName }}' /><br />
-    Phone <input type='tel' name='phone' value='{{ user.phone }}' /><br />
-    email <input type='email' name='phone' value='{{ user.email }}' /><br />
-    <input type='hidden' name='id' value='{{ user._id }}' /> <br/>
-    <button type="submit">{{#if user}}Update{{else}}Add{{/if}} user</button>
+    User Name <input type='text' name='firstName' value='{{ provider.firstName }}' /><br />
+    First Name <input type='text' name='firstName' value='{{ provider.firstName }}' /><br />
+    Last Name <input type='text' name='lastName' value='{{ provider.lastName }}' /><br />
+    Phone <input type='tel' name='phone' value='{{ provider.phone }}' /><br />
+    email <input type='email' name='phone' value='{{ provider.email }}' /><br />
+    <input type='hidden' name='id' value='{{ provider._id }}' /> <br/>
+    <button type="submit">{{#if provider}}Update{{else}}Add{{/if}} provider</button>
   </p>
 </form>

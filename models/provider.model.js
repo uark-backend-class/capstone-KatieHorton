@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { provider } = require('../db');
+const User = require('./user.model');
 
 //DEFINE SCHEMA
 const providerSchema = new mongoose.Schema({
@@ -30,8 +30,8 @@ const providerSchema = new mongoose.Schema({
         type: Number,
         maxlength: 5
     }
-}//,
-    /*
+},
+    
     address: {
         type: String,
         required: 'Please enter Practice address',
@@ -45,7 +45,7 @@ const providerSchema = new mongoose.Schema({
             author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
         }
     ]
-    */
+    
 });
 
 exports.Provider = mongoose.model('Provider', providerSchema);
