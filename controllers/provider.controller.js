@@ -5,7 +5,7 @@ const db = require('../db');
 
 // GET ALL
 exports.getAll = async (req, res) => {
-  const providers = await Provider.find({}).lean();
+  const providers = await provider.find({}).lean();
   console.log([ providers ]);
   res.redirect()
 }
