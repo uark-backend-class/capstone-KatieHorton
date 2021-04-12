@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 const User = require('./user.model');
+const db = require('../db');
 
+
+//CONNECT TO DB
+db.on('open', async () => {
+    console.log('Magically super connected MHC');
+  
 //DEFINE SCHEMA
 const providerSchema = new mongoose.Schema({
     name:  {
@@ -18,18 +24,16 @@ const providerSchema = new mongoose.Schema({
     contact: {
         email: {
             type: String,
+            required: 'please enter provider email',
             maxlength: 30
         },
         phone: { 
             type: String,
+            required: 'please enter provider phone number',
             maxlength: 10
   
     },
 
-    zip: {
-        type: Number,
-        maxlength: 5
-    }
 },
     
     address: {
@@ -38,7 +42,7 @@ const providerSchema = new mongoose.Schema({
         length: 5
     },
 
-    comments : [
+    reviews : [
         {
             body: String,
             date: Date,
@@ -48,4 +52,7 @@ const providerSchema = new mongoose.Schema({
     
 });
 
+//EXPORT PROVIDER MODEL
 exports.Provider = mongoose.model('Provider', providerSchema);
+
+});
