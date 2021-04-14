@@ -29,7 +29,7 @@ exports.addProvider = async (req, res) => {
  res.redirect('/');
 
   //or res.redirect(`/providersListPage`);
-}
+};
 
 // READ
 exports.getAll = async (req, res, err) => {
@@ -37,7 +37,7 @@ exports.getAll = async (req, res, err) => {
   const providers = await Provider.find({}).lean();
   res.send([ providers ]);
 res.redirect('/');
-}
+};
 
 exports.addComment = async (req, res) => {
   let provider = await Provider.findById(req.params.id).lean();
@@ -46,7 +46,7 @@ exports.addComment = async (req, res) => {
   provider.comments.push({ body: "test comment", date: new Date(), author: req.user._id });
 
   res.redirect(`/providers/?id=${req.params.id}`);
-}
+};
 
 //FIND BY ID
 exports.findById = async (req, res) => {
@@ -55,7 +55,7 @@ exports.findById = async (req, res) => {
 
   res.redirect(`/provider/?id=${foundProvider._id}`);
   }
-}
+};
 
 //FIND BY SPECIALTY
 exports.findBySpecialty = async (req, res, err) => {
@@ -63,30 +63,30 @@ exports.findBySpecialty = async (req, res, err) => {
   const specialist = await Provider.find.where('specialty').equals(req.query.params);
  
   res.redirect(`./providers/?specialty=${specialist.specialty}`);
-}
+};
 
 //DELETE
 exports.deleteProvider = async (req, res) => {
-  await db.provider.findByIdAndDelete(req.params.id);
+  await Provider.findByIdAndDelete(req.params.id);
   res.send(`provider deleted.`);
   res.redirect('/');
-}
+};
 
 //LIST PROVIDERS PAGE
 exports.listProvidersPage = async (req, res) => {
   let mainHeader = "Provider List";
 
-  let providers = await db.provider.find({}).lean();
+  let providers = await Provider.find({}).lean();
   
   let name = req.user ? req.user.name : 'Not logged in';
   let flashes = [ ...req.flash('info'), ...req.flash('great success!') ];
 
   res.render('Provider List', { header: mainHeader, providers, name, flashes });
-}
+};
 
 exports.addUpdateProviderPage = async (req, res) => {
   if (req.params.id) {
-    let provider = await db.provider.findById(req.params.id).lean();
+    let provider = await Provider.findById(req.params.id).lean();
  
     res.render('add-update', { provider });
   }
@@ -94,4 +94,4 @@ exports.addUpdateProviderPage = async (req, res) => {
   else {
     res.render('add-update');
   }
-}
+};
