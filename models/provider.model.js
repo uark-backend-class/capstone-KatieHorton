@@ -1,12 +1,5 @@
 const mongoose = require('mongoose');
-const User = require('./user.model');
-const db = require('../db');
 
-
-//CONNECT TO DB
-db.on('open', async () => {
-    console.log('Magically super connected MHC');
-  
 //DEFINE SCHEMA
 const providerSchema = new mongoose.Schema({
     name:  {
@@ -27,13 +20,13 @@ const providerSchema = new mongoose.Schema({
             required: 'please enter provider email',
             maxlength: 30
         },
-        phone: { 
+        phone: {
             type: String,
             required: 'please enter provider phone number',
             maxlength: 10
-  
+
     },
-    
+
     address: {
         type: String,
         required: 'Please enter Practice address',
@@ -49,15 +42,13 @@ const providerSchema = new mongoose.Schema({
         }
     ],
 
-   password: 
+   password:
    {
        type: String,
-       required: 'Please enter a password' 
+       required: 'Please enter a password'
    }
-   
+
 });
 
 //EXPORT PROVIDER MODEL
-exports.Provider = mongoose.model('Provider', providerSchema);
-
-});
+module.exports = mongoose.model('Provider', providerSchema);
