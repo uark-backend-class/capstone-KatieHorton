@@ -1,5 +1,6 @@
+<h1>{{ header }}</h1>
+<a href="/add">Add Provider</a>
 
-<h1>{{#if provider}}Update{{else}}Add{{/if}}Provider</h1>
 <table>
   <tr>
     <th>Name</th>
@@ -9,7 +10,7 @@
     <th>Password</th>
     <th></th>
   </tr>
-  {{#each Providers}}
+  {{#each providers}}
     <tr><td>{{this.name}}</td>
     <td>{{this.email}}</td>
     <td>{{this.phone}}</td>

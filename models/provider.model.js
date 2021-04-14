@@ -41,14 +41,20 @@ const providerSchema = new mongoose.Schema({
     },
 },
 
-    reviews : [
+    comments : [
         {
             body: String,
             date: Date,
             author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
         }
-    ]
-    
+    ],
+
+   password: 
+   {
+       type: String,
+       required: 'Please enter a password' 
+   }
+   
 });
 
 //EXPORT PROVIDER MODEL

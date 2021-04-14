@@ -4,11 +4,6 @@ mongoose.Promise = global.Promise;
 const User = require('../models/user.model');
 const db = require('../db');
 
-
-db.on('open', () => { console.log('Magically Connected to MHC') });
-db.on('error', console.error.bind(console, 'MHC connection error, Threat Level: MIDNIGHT'));
-
-
 // CREATE/UPDATE
 exports.addProvider = async (req, res) => {
   if (error) return handleError(error);
@@ -31,7 +26,7 @@ exports.addProvider = async (req, res) => {
     //req.flash('info', 'Provider Added!');
   }
  res.render('createUpdate', { provider });
-  //res.redirect('/');
+ res.redirect('/');
 
   //or res.redirect(`/providersListPage`);
 }

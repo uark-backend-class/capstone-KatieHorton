@@ -1,12 +1,13 @@
 <h1>{{#if provider}}Update{{else}}Add{{/if}} a provider</h1>
 <form action="/addProvider" method="POST">
   <p>
-    User Name <input type='text' name='firstName' value='{{ provider.firstName }}' /><br />
-    First Name <input type='text' name='firstName' value='{{ provider.firstName }}' /><br />
-    Last Name <input type='text' name='lastName' value='{{ provider.lastName }}' /><br />
-    Phone <input type='tel' name='phone' value='{{ provider.phone }}' /><br />
-    email <input type='email' name='phone' value='{{ provider.email }}' /><br />
-    <input type='hidden' name='id' value='{{ provider._id }}' /> <br/>
+    Name <input type="text" name="name" value="{{ provider.name }}" /><br />
+    Specialty <input type="text" name="specialty" value="{{ provider.specialty }}" /><br />
+    Address <input type="text" name="address" value="{{ provider.contact.address}}" /><br />
+    Phone <input type="tel" name="phone" value="{{ provider.contact.phone }}" /><br />
+    email <input type="email" name="phone" value="{{ provider.contact.email }}" /><br />
+    Password <input type="password" name="password" value={{provider.password}} /><br />
+    <input type="hidden" name="id" value="{{ provider._id }}" /> <br/>
     <button type="submit">{{#if provider}}Update{{else}}Add{{/if}} provider</button>
   </p>
 </form>
