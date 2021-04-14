@@ -35,7 +35,7 @@ const provider = require('../controllers/provider.controller');
 
 //router.use(auth.isAuthenticated);
 router.get('/', provider.listProvidersPage);
-router.get('/createUpdate/:id', provider.addProvider);
+router.post('/createUpdate/:id', provider.addProvider);
 router.get('/provider/:specialty', provider.findBySpecialty);
 router.delete('/provider/:id', provider.deleteProvider);
 router.get('/secrets', (req, res) => res.send('Super secret nonsense!'));

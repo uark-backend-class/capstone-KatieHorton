@@ -1,17 +1,17 @@
 const  Provider = require('../models/provider.model');
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 const User = require('../models/user.model');
 const db = require('../db');
 
-// GET ALL
-exports.getAll = async (req, res) => {
-  const providers = await provider.find({}).lean();
-  console.log([ providers ]);
-  res.redirect()
-}
+
+db.on('open', () => { console.log('Magically Connected to MHC') });
+db.on('error', console.error.bind(console, 'MHC connection error, Threat Level: MIDNIGHT'));
+
 
 // CREATE/UPDATE
 exports.addProvider = async (req, res) => {
+  if (error) return handleError(error);
   console.log(req.body.firstName);
   console.log(req.body.lastName);
   console.log(req.body.specialty);
@@ -20,19 +20,32 @@ exports.addProvider = async (req, res) => {
   console.log(req.body.password);
 
   if (req.body.id) {
-    await provider.findByIdAndUpdate(req.body.id, req.body);
-    req.flash('info', 'Provider updated!');
+    await Provider.findByIdAndUpdate(req.body.id, req.body);
+    if (error) return handleError(error);
+    req.flash('info', 'Provider Update Error!');
   }
   else {
     const provider = new Provider(req.body); 
     await provider.save();
-    req.flash('info', 'Provider added!');
+    res.render('createUpdate', { provider });
+    //req.flash('info', 'Provider Added!');
   }
-  res.redirect(`/provider/?id=$${provider._id}`);
+ res.render('createUpdate', { provider });
+  //res.redirect('/');
+
+  //or res.redirect(`/providersListPage`);
+}
+
+// READ
+exports.getAll = async (req, res, err) => {
+  if (err) return handleError(err);
+  const providers = await Provider.find({}).lean();
+  res.send([ providers ]);
+res.redirect('/');
 }
 
 exports.addComment = async (req, res) => {
-  let provider = await provider.findById(req.params.id);
+  let provider = await Provider.findById(req.params.id).lean();
 
   // pseudo code, need to get the comment test
   provider.comments.push({ body: "test comment", date: new Date(), author: req.user._id });
@@ -44,20 +57,22 @@ exports.addComment = async (req, res) => {
 exports.findById = async (req, res) => {
   const foundProvider =  await Provider.findById(req.params.id).lean(); {
    if(err) return handleError(err);
+
   res.redirect(`/provider/?id=${foundProvider._id}`);
   }
 }
 
 //FIND BY SPECIALTY
 exports.findBySpecialty = async (req, res, err) => {
-  const specialist = await db.Provider.find.where('specialty').equals(req.query.params);
   if (err) return handleError(err);
+  const specialist = await Provider.find.where('specialty').equals(req.query.params);
+ 
   res.redirect(`./providers/?specialty=${specialist.specialty}`);
 }
 
 //DELETE
 exports.deleteProvider = async (req, res) => {
-  await Provider.findByIdAndDelete(req.params.id);
+  await db.provider.findByIdAndDelete(req.params.id);
   res.send(`provider deleted.`);
   res.redirect('/');
 }
@@ -66,7 +81,7 @@ exports.deleteProvider = async (req, res) => {
 exports.listProvidersPage = async (req, res) => {
   let mainHeader = "Provider List";
 
-  let providers = await provider.find({}).lean();
+  let providers = await db.provider.find({}).lean();
   
   let name = req.user ? req.user.name : 'Not logged in';
   let flashes = [ ...req.flash('info'), ...req.flash('great success!') ];
@@ -76,7 +91,7 @@ exports.listProvidersPage = async (req, res) => {
 
 exports.addUpdateProviderPage = async (req, res) => {
   if (req.params.id) {
-    let provider = await provider.findById(req.params.id).lean();
+    let provider = await db.provider.findById(req.params.id).lean();
  
     res.render('add-update', { provider });
   }

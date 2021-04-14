@@ -3,6 +3,7 @@ const app = express();
 const routes = require('./routes');
 const port = 3000;
 const exphbs = require('express-handlebars');
+const db = require('./db');
 /*
 const routes = require('./routes');
 const GithubStrategy = require('passport-github2');
@@ -86,6 +87,5 @@ app.use(routes);
 app.use(express.urlencoded());
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
-
 
 app.listen(port, () => console.log(`Server listening on port: ${port}`));

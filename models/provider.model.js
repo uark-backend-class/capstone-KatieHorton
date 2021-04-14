@@ -33,14 +33,13 @@ const providerSchema = new mongoose.Schema({
             maxlength: 10
   
     },
-
-},
     
     address: {
         type: String,
         required: 'Please enter Practice address',
         length: 5
     },
+},
 
     reviews : [
         {

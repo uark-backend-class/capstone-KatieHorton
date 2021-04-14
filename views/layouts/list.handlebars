@@ -1,0 +1,20 @@
+
+<h1>{{#if provider}}Update{{else}}Add{{/if}}Provider</h1>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Specialty</th>
+    <th>Phone</th>
+    <th>email</th>
+    <th>Password</th>
+    <th></th>
+  </tr>
+  {{#each Providers}}
+    <tr><td>{{this.name}}</td>
+    <td>{{this.email}}</td>
+    <td>{{this.phone}}</td>
+    <td>{{this.password}}</td>
+    <td><a href="/update/{{this._id}}">Edit</a></td>
+    <a href="/delete/{{this._id}}"> Delete </a></td></tr>
+  {{/each}}
+</table>
