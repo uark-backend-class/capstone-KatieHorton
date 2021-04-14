@@ -20,7 +20,7 @@ exports.addProvider = async (req, res) => {
     req.flash('info', 'Provider Update Error!');
   }
   else {
-    const provider = new Provider(req.body); 
+    const provider = new Provider(req.body);
     await provider.save();
     res.render('createUpdate', { provider });
     //req.flash('info', 'Provider Added!');
@@ -61,7 +61,7 @@ exports.findById = async (req, res) => {
 exports.findBySpecialty = async (req, res, err) => {
   if (err) return handleError(err);
   const specialist = await Provider.find.where('specialty').equals(req.query.params);
- 
+
   res.redirect(`./providers/?specialty=${specialist.specialty}`);
 };
 
@@ -77,17 +77,16 @@ exports.listProvidersPage = async (req, res) => {
   let mainHeader = "Provider List";
 
   let providers = await Provider.find({}).lean();
-  
-  let name = req.user ? req.user.name : 'Not logged in';
-  let flashes = [ ...req.flash('info'), ...req.flash('great success!') ];
 
-  res.render('Provider List', { header: mainHeader, providers, name, flashes });
+  let name = req.user ? req.user.name : 'Not logged in';
+
+  res.render('list', { header: mainHeader, providers, name });
 };
 
 exports.addUpdateProviderPage = async (req, res) => {
   if (req.params.id) {
     let provider = await Provider.findById(req.params.id).lean();
- 
+
     res.render('add-update', { provider });
   }
 
