@@ -35,10 +35,11 @@ const provider = require('../controllers/provider.controller');
 
 //router.use(auth.isAuthenticated);
 router.get('/', provider.getProviders);
-router.get('/provider/:id', provider.findById);
-router.post('/provider/:id', provider.addUpdateProvider);
-router.get('/provider/:specialty', provider.findBySpecialty);
-router.delete('/provider/:id', provider.deleteProvider);
+// router.get('/provider/:id', provider.findById);
+// router.post('/provider/:id', provider.addUpdateProvider);
+// router.get('/provider/:specialty', provider.findBySpecialty);
+// router.delete('/provider/:id', provider.deleteProvider);
 router.get('/secrets', (req, res) => res.send('Broccoli is my favorite'));
+router.get('/provider/add', provider.addUpdateProviderPage);
 
 module.exports = router;

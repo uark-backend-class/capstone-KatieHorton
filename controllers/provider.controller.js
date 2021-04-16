@@ -41,7 +41,7 @@ exports.getProviders = async (req, res) => {
 
 //FIND BY ID
 exports.findById = async (req, res) => {
-  const foundProvider =  await Provider.findById(req.params.id).lean(); 
+  const foundProvider =  await Provider.findById(req.params.id).lean();
    if(err) return handleError(err);
 
   res.redirect(`/provider/?id=${req.params.id}`);
@@ -76,15 +76,7 @@ exports.deleteProvider = async (req, res) => {
 
 
 exports.addUpdateProviderPage = async (req, res) => {
-  if (req.params.id) {
-    let provider = await Provider.findById(req.params.id).lean();
-
-    res.render('add-update', { provider });
-  }
-
-  else {
-    res.render('add-update');
-  }
+  res.render('createUpdate');
 };
 
 /*
