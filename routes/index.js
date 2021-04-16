@@ -34,10 +34,11 @@ router.get('/secrets', (req, res) => res.send('Super secret things!'));
 const provider = require('../controllers/provider.controller');
 
 //router.use(auth.isAuthenticated);
-router.get('/', provider.listProvidersPage);
-router.post('/createUpdate/:id', provider.addProvider);
+router.get('/', provider.getProviders);
+router.get('/provider/:id', provider.findById);
+router.post('/provider/:id', provider.addUpdateProvider);
 router.get('/provider/:specialty', provider.findBySpecialty);
 router.delete('/provider/:id', provider.deleteProvider);
-router.get('/secrets', (req, res) => res.send('Super secret nonsense!'));
+router.get('/secrets', (req, res) => res.send('Broccoli is my favorite'));
 
 module.exports = router;

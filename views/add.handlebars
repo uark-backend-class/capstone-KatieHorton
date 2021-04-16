@@ -1,10 +1,11 @@
-<h1>{{#if provider}}Update{{else}}Add{{/if}} a Provider</h1>
-        <form action="/addProvider" method="POST">
+<h1> Provider</h1>
+        <form action="getProvider" method="POST">
             <p>
                 Name <input type="text" name="fullName" /><br />
                 Specialty <input type="text" name="specialty" /><br />
                 Phone <input type="tel" name="phone" /><br />
                 email <input type="text" name="email" /><br />
+                address<input type = "text" name="address" /><br />
                 Password<input type="password" name ="password" /><br />
             <button type="submit">Add Provider</button>
         </p>

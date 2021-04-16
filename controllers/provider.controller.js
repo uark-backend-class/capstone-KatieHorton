@@ -1,14 +1,11 @@
 const  Provider = require('../models/provider.model');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-const User = require('../models/user.model');
-const db = require('../db');
 
 // CREATE/UPDATE
-exports.addProvider = async (req, res) => {
+exports.addUpdateProvider = async (req, res) => {
   if (error) return handleError(error);
-  console.log(req.body.firstName);
-  console.log(req.body.lastName);
+  console.log(req.body.name);
   console.log(req.body.specialty);
   console.log(req.body.email);
   console.log(req.body.phone);
@@ -17,7 +14,7 @@ exports.addProvider = async (req, res) => {
   if (req.body.id) {
     await Provider.findByIdAndUpdate(req.body.id, req.body);
     if (error) return handleError(error);
-    req.flash('info', 'Provider Update Error!');
+    //req.flash('info', 'Provider Update Error!');
   }
   else {
     const provider = new Provider(req.body);
@@ -25,18 +22,30 @@ exports.addProvider = async (req, res) => {
     res.render('createUpdate', { provider });
     //req.flash('info', 'Provider Added!');
   }
- res.render('createUpdate', { provider });
- res.redirect('/');
+
+ res.redirect(`/provider/?id=${ req.params.id }`);
 
   //or res.redirect(`/providersListPage`);
 };
 
-// READ
-exports.getAll = async (req, res, err) => {
-  if (err) return handleError(err);
-  const providers = await Provider.find({}).lean();
-  res.send([ providers ]);
-res.redirect('/');
+//LIST PROVIDERS PAGE
+exports.getProviders = async (req, res) => {
+  let mainHeader = "Provider List";
+
+  let providers = await Provider.find({}).lean();
+
+  let name = req.provider ? req.provider.name : 'Not logged in';
+
+  res.render('list', { header: mainHeader, providers, name });
+};
+
+//FIND BY ID
+exports.findById = async (req, res) => {
+  const foundProvider =  await Provider.findById(req.params.id).lean(); 
+   if(err) return handleError(err);
+
+  res.redirect(`/provider/?id=${req.params.id}`);
+
 };
 
 exports.addComment = async (req, res) => {
@@ -48,14 +57,6 @@ exports.addComment = async (req, res) => {
   res.redirect(`/providers/?id=${req.params.id}`);
 };
 
-//FIND BY ID
-exports.findById = async (req, res) => {
-  const foundProvider =  await Provider.findById(req.params.id).lean(); {
-   if(err) return handleError(err);
-
-  res.redirect(`/provider/?id=${foundProvider._id}`);
-  }
-};
 
 //FIND BY SPECIALTY
 exports.findBySpecialty = async (req, res, err) => {
@@ -72,16 +73,7 @@ exports.deleteProvider = async (req, res) => {
   res.redirect('/');
 };
 
-//LIST PROVIDERS PAGE
-exports.listProvidersPage = async (req, res) => {
-  let mainHeader = "Provider List";
 
-  let providers = await Provider.find({}).lean();
-
-  let name = req.user ? req.user.name : 'Not logged in';
-
-  res.render('list', { header: mainHeader, providers, name });
-};
 
 exports.addUpdateProviderPage = async (req, res) => {
   if (req.params.id) {
@@ -94,3 +86,7 @@ exports.addUpdateProviderPage = async (req, res) => {
     res.render('add-update');
   }
 };
+
+/*
+https://www.affirmations.dev/
+*/

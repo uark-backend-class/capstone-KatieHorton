@@ -1,5 +1,6 @@
+extends layout
 <h1>{{ header }}</h1>
-<a href="/add">Add Provider</a>
+<a href="/createUpdate"><h1>{{#if provider}}Update{{else}}Add{{/if}} a provider</h1></a>
 
 <table>
   <tr>
@@ -15,7 +16,7 @@
     <td>{{this.email}}</td>
     <td>{{this.phone}}</td>
     <td>{{this.password}}</td>
-    <td><a href="/update/{{this._id}}">Edit</a></td>
-    <a href="/delete/{{this._id}}"> Delete </a></td></tr>
+    <td><a href="/createUpdate/provider/?id={{this._id}}">Edit</a></td>
+    <td><a href="/delete/{{this._id}}"> Delete </a></td></tr>
   {{/each}}
 </table>
