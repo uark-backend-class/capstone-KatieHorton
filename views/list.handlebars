@@ -1,22 +1,40 @@
-extends layout
+{{#if flashes}}
+{{#each flashes}}
+<div class="alert alert-success">{{ this }}</div>
+{{/each}}
+{{/if}}
+<h3>{{ name }} <a class="btn btn-secondary btn-sm" href="/logout">log out</a></h3>
 <h1>{{ header }}</h1>
-<a href="provider/add"><h1>{{#if provider}}Update{{else}}Add{{/if}} a provider</h1></a>
+<p>
+  <a href="/add">
+    <h1>{{#if provider}}Update{{else}}Add{{/if}} a provider</h1>
+  </a></a>
+</p>
+
+<h2>{{header}}</h2>
+
 
 <table>
   <tr>
     <th>Name</th>
     <th>Specialty</th>
-    <th>Phone</th>
     <th>email</th>
     <th>Password</th>
+    <th>Phone</th>
+    <th>Address</th>
     <th></th>
   </tr>
   {{#each providers}}
-    <tr><td>{{this.name}}</td>
+  <tr>
+    <td>{{this.name}}</td>
     <td>{{this.email}}</td>
-    <td>{{this.phone}}</td>
+    <td>{{this.specialty}}</td>
     <td>{{this.password}}</td>
-    <td><a href="/createUpdate/provider/?id={{this._id}}">Edit</a></td>
-    <td><a href="/delete/{{this._id}}"> Delete </a></td></tr>
+    <td>{{this.address}}</td>
+    <td>{{this.phone}}</td>
+    <td>{{this._id}}</td>
+    <td><a href="/update/{{this._id}}"> Edit </a></td>
+    <td><a href="/delete/{{this._id}}"> Delete </a></td>
+  </tr>
   {{/each}}
 </table>

@@ -1,37 +1,38 @@
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
 //DEFINE SCHEMA
 const providerSchema = new mongoose.Schema({
     name:  {
         type: String,
-        required: 'please enter provider name',
+        //required: 'please enter provider name',
         maxlength: 100
     },
 
     specialty: {
         type: [String],
-        required: 'please enter provider specialty',
+        //required: 'please enter provider specialty',
         maxlength: 100
     },
-
-    contact: {
-        email: {
+contact: {
+    email: {
             type: String,
-            required: 'please enter provider email',
+            //required: 'please enter provider email',
             maxlength: 30
         },
-        phone: {
+    
+    phone: {
             type: String,
-            required: 'please enter provider phone number',
+            //required: 'please enter provider phone number',
             maxlength: 10
         },
 
-        address: {
+     address: {
             type: String,
-            required: 'Please enter Practice address',
-            length: 5
-        },
+            //required: 'Please enter Practice address',
+            
     },
+ },
 
     comments : [
         {
@@ -43,7 +44,7 @@ const providerSchema = new mongoose.Schema({
    password:
    {
        type: String,
-       required: 'Please enter a password'
+       // required: 'Please enter a password'
    }
 
 });

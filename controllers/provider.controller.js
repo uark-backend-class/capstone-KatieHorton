@@ -1,53 +1,57 @@
-const  Provider = require('../models/provider.model');
-const mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
+const Provider = require("../models/provider.model");
+const User = require('../models/user.model');
 
 // CREATE/UPDATE
-exports.addUpdateProvider = async (req, res) => {
-  if (error) return handleError(error);
+exports.addProvider = async (req, res) => {
   console.log(req.body.name);
   console.log(req.body.specialty);
   console.log(req.body.email);
-  console.log(req.body.phone);
   console.log(req.body.password);
+  console.log(req.body.phone);
+  console.log(req.body.address);
 
   if (req.body.id) {
-    await Provider.findByIdAndUpdate(req.body.id, req.body);
-    if (error) return handleError(error);
-    //req.flash('info', 'Provider Update Error!');
-  }
-  else {
-    const provider = new Provider(req.body);
+    let provider = await Provider.findByIdAndUpdate(req.body.id, req.body);
     await provider.save();
-    res.render('createUpdate', { provider });
-    //req.flash('info', 'Provider Added!');
+    req.flash("info", "Provider Update Error!");
+  } else {
+    let provider = new Provider(req.body);
+    console.log(req.body);
+    await provider.save();
+    req.flash("info", "Provider Added!");
   }
+  res.redirect("/");
+};
 
- res.redirect(`/provider/?id=${ req.params.id }`);
 
-  //or res.redirect(`/providersListPage`);
+exports.deleteProvider = async (req, res) => {
+  await Provider.findByIdAndDelete(req.params.id);
+  //req.flash('info', 'Provider Deleted!');
+  res.redirect("/");
 };
 
 //LIST PROVIDERS PAGE
-exports.getProviders = async (req, res) => {
+exports.listProvidersPage = async (req, res) => {
   let mainHeader = "Provider List";
 
   let providers = await Provider.find({}).lean();
 
-  let name = req.provider ? req.provider.name : 'Not logged in';
+  //let name = req.provider ? req.provider.name : 'Not logged in';
 
-  res.render('list', { header: mainHeader, providers, name });
+  res.render("list", { header: mainHeader, providers });
 };
 
-//FIND BY ID
-exports.findById = async (req, res) => {
-  const foundProvider =  await Provider.findById(req.params.id).lean();
-   if(err) return handleError(err);
+//ADD UPDATE PAGE
+exports.addUpdateProviderPage = async (req, res) => {
+  if (req.params.id) {
+    let provider = await Provider.findById(req.params.id).lean();
 
-  res.redirect(`/provider/?id=${req.params.id}`);
-
+    res.render("addUpdate", { provider });
+  } else {
+    res.render('addUpdate');
+  }
 };
-
+/*
 exports.addComment = async (req, res) => {
   let provider = await Provider.findById(req.params.id).lean();
 
@@ -64,20 +68,7 @@ exports.findBySpecialty = async (req, res, err) => {
   const specialist = await Provider.find.where('specialty').equals(req.query.params);
 
   res.redirect(`./providers/?specialty=${specialist.specialty}`);
-};
-
-//DELETE
-exports.deleteProvider = async (req, res) => {
-  await Provider.findByIdAndDelete(req.params.id);
-  res.send(`provider deleted.`);
-  res.redirect('/');
-};
-
-
-
-exports.addUpdateProviderPage = async (req, res) => {
-  res.render('createUpdate');
-};
+};*/
 
 /*
 https://www.affirmations.dev/
