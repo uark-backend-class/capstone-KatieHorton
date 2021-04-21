@@ -20,9 +20,8 @@ function(req, res) {
   res.redirect('/');
 });
   
-
-router.get('/', provider.listProvidersPage);
 passport.use('isAuth', auth.isAuthenticated);
+router.get('/', provider.listProvidersPage);
 router.get('/add', provider.addUpdateProviderPage);
 router.post('/addProvider', provider.addProvider);
 router.get('/update/:id', provider.addUpdateProviderPage);

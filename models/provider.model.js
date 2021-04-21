@@ -14,7 +14,7 @@ const providerSchema = new mongoose.Schema({
         //required: 'please enter provider specialty',
         maxlength: 100
     },
-contact: {
+    contact: {
     email: {
             type: String,
             //required: 'please enter provider email',

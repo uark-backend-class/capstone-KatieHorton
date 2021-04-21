@@ -62,14 +62,14 @@ exports.addComment = async (req, res) => {
   res.redirect(`/providers/?id=${req.params.id}`);
 };
 
-
+*/
 //FIND BY SPECIALTY
 exports.findBySpecialty = async (req, res, err) => {
   if (err) return handleError(err);
   const specialist = await Provider.find.where('specialty').equals(req.query.params);
 
   res.redirect(`./providers/?specialty=${specialist.specialty}`);
-};*/
+};
 
 /*
 https://www.affirmations.dev/
