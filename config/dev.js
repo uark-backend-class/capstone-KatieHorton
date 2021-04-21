@@ -1,7 +1,7 @@
 module.exports = {
     URI: "mongodb+srv://Katie:SecretAgentC4t@mhc-project.znslh.mongodb.net/mhc-project?retryWrites=true&w=majority",
     SECRET: "xxxxxxx", 
-    GITHUB_CLIENT_ID: "066dd4a1df1797e8cf03",  
-    GITHUB_CLIENT_SECRET: "8fd85d24b10ef48922819d5e85d227d89867575b", 
-    GITHUB_CALLBACK_URL: "http://localhost:3000/api/auth/github/callback",
+    clientID: "662905926750-8qs0cdberuhj4k6nkmsocl9rl9q2raf1.apps.googleusercontent.com",
+    clientSecret: "tI_pYjXJ8SMhp2K8VtnhQmQe",
+    callbackURL: "/auth/google/redirect"
     };

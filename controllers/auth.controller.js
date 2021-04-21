@@ -15,9 +15,9 @@ exports.loginPage = (req, res) => {
 
 exports.login = passport.authenticate('local', {
   failureRedirect: '/login',
-  failureFlash: 'Failed login!',
+  failureFlash: 'LOGIN FAILURE!',
   successRedirect: '/',
-  successFlash: 'You are now logged in!'
+  successFlash: 'Great Success!'
 });
 
 exports.registrationPage = (req, res) => {

@@ -13,12 +13,12 @@ exports.addProvider = async (req, res) => {
   if (req.body.id) {
     let provider = await Provider.findByIdAndUpdate(req.body.id, req.body);
     await provider.save();
-    req.flash("info", "Provider Update Error!");
+    //req.flash("info", "Provider Update Error!");
   } else {
     let provider = new Provider(req.body);
     console.log(req.body);
     await provider.save();
-    req.flash("info", "Provider Added!");
+    //req.flash("info", "Provider Added!");
   }
   res.redirect("/");
 };
@@ -50,6 +50,7 @@ exports.addUpdateProviderPage = async (req, res) => {
   } else {
     res.render('addUpdate');
   }
+  res.redirect('/');
 };
 /*
 exports.addComment = async (req, res) => {

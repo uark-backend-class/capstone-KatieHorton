@@ -15,14 +15,14 @@ router.post('/register', (req, res, next) => {
         });
       } else {
         passport.authenticate('/users/:userName')(req, res, () => {
-          User.findOne({
+          User.find({
             username: req.body.username
           }, (err,user) => {
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
             res.json({
               success: true,
-              status: 'Registration Successful!',
+              status: 'Registration Success!',
             });
           });
         })
@@ -31,14 +31,14 @@ router.post('/register', (req, res, next) => {
 });
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
-    User.findOne({
+    User.find({
       username: req.body.username
     }, (err, person) => {
       res.statusCode = 200;
       res.setHeader('Content-Type', 'application/json');
       res.json({
         success: true,
-        status: 'You are successfully logged in!'
+        status: 'Logged in'
       });
     })
   });
@@ -51,12 +51,12 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
         } else {
           res.clearCookie('session-id');
           res.json({
-            message: 'You are successfully logged out!'
+            message: 'Logout success!'
           });
         }
       });
     } else {
-      const err = new Error('You are not logged in!');
+      const err = new Error('Please log in to continue.');
       err.status = 403;
       next(err);
     }

@@ -19,20 +19,19 @@
     <th>Name</th>
     <th>Specialty</th>
     <th>email</th>
-    <th>Password</th>
+    <th>Address</th>  
     <th>Phone</th>
-    <th>Address</th>
+
     <th></th>
   </tr>
   {{#each providers}}
   <tr>
     <td>{{this.name}}</td>
-    <td>{{this.email}}</td>
     <td>{{this.specialty}}</td>
-    <td>{{this.password}}</td>
-    <td>{{this.address}}</td>
-    <td>{{this.phone}}</td>
-    <td>{{this._id}}</td>
+    <td>{{this.contact.email}}</td>
+    <td>{{this.contact.address}}</td>
+    <td>{{this.contact.phone}}</td>
+  
     <td><a href="/update/{{this._id}}"> Edit </a></td>
     <td><a href="/delete/{{this._id}}"> Delete </a></td>
   </tr>

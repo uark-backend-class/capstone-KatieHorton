@@ -4,6 +4,7 @@
   "description": "Final Project",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "jest"
   },
   "repository": {
@@ -27,6 +28,7 @@
     "mongoose": "^5.12.0",
     "passport": "^0.4.1",
     "passport-github2": "^0.1.12",
+    "passport-google-oauth20": "^2.0.0",
     "passport-local-mongoose": "^6.1.0"
   }
 }
