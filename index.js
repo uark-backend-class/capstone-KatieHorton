@@ -5,15 +5,16 @@ const exphbs = require('express-handlebars');
 const session = require('express-session');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
+const { googleOAuthId, googleSecret } = require('./config/dev');
 const flash = require('connect-flash');
 const User = require('./controllers/user.controller');
 const port = 3000;
 require('./db');
 
 passport.use(new GoogleStrategy({
-  clientID: "662905926750-8qs0cdberuhj4k6nkmsocl9rl9q2raf1.apps.googleusercontent.com",
-  clientSecret: "tI_pYjXJ8SMhp2K8VtnhQmQe",
-  callbackURL: "/auth/google/redirect"
+  clientID: googleOAuthId,
+  clientSecret: googleSecret,
+  callbackURL: 'http://localhost:3000/auth/google/redirect'
 }, async (accessToken, refreshToken, profile, done) => {
   let currentUser = await User.findOne({ googleId: profile.id });
 

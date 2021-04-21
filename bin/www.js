@@ -5,7 +5,7 @@ const app = require('../app');
 
 //first function to connect to mongoose:
 beforeEach(async(done) => {
-	const mongoUri = "mongodb+srv://Katie:SecretAgentC4t@mhc-project.znslh.mongodb.net/mhc-project?retryWrites=true&w=majority";
+	const mongoUri = process.env.mongoDBID;
 	mongoose.connect(mongoUri, mongoOptions, () => done()), 
 }, setTimeout(8000);
 

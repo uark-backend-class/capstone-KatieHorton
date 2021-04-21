@@ -1,4 +1,4 @@
-node_modules
+node_modules,
 config
 
 # Created by https://www.gitignore.io/api/node,visualstudiocode
