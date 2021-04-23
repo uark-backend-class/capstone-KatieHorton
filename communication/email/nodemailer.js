@@ -1,18 +1,18 @@
 const nodemailer = require('nodemailer');
 
-const transport = nodemailer.createTransport({
-host: 'smtp.mailtrap.io',
-port: 2525,
-auth: { user: 'userName',
-	password:'password'
-}
-});
-
+var transport = nodemailer.createTransport({
+    host: "smtp.mailtrap.io",
+    port: 2525,
+    auth: {
+      user: "e2623d35835010",
+      pass: "182a19a11ce287"
+    }
+  });
 
 const mail = {
     from:'me@me.com',
     to: 'test@example.com',
-    subject:'our first email!',
+    subject:'New Appointment Request',
     html: '<h1> Hello!</h1>'
     }
     

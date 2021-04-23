@@ -1,10 +1,11 @@
+
 {{#if flashes}}
 {{#each flashes}}
 <div class="alert alert-success">{{ this }}</div>
 {{/each}}
 {{/if}}
-<h3>{{ name }} <a class="btn btn-secondary btn-sm" href="/login"> log in</a></h3>
-<h1>{{ header }}</h1>
+
+
 <p>
   <a href="/add">
     <h1>{{#if provider}}Update{{else}}Add{{/if}} a provider</h1>
@@ -13,27 +14,25 @@
 
 <h2>{{header}}</h2>
 
+<p>
+  <a href= "/specialty">Search by services</a>
+</p>
 
 <table>
   <tr>
     <th>Name</th>
     <th>Specialty</th>
-    <th>email</th>
-    <th>Address</th>
-    <th>Phone</th>
 
-    <th></th>
   </tr>
   {{#each providers}}
   <tr>
     <td>{{this.name}}</td>
     <td>{{this.specialty}}</td>
-    <td>{{this.contact.email}}</td>
-    <td>{{this.contact.address}}</td>
-    <td>{{this.contact.phone}}</td>
-    <td><a href ="{{this.contact.email}}" > Request Appointment </a></td>
+
+    <td><a href ="mailto:{{this.contact.email}}" > Request Appointment </a></td>
     <td><a href="/update/{{this._id}}"> Edit </a></td>
     <td><a href="/delete/{{this._id}}"> Delete </a></td>
   </tr>
   {{/each}}
 </table>
+

@@ -6,6 +6,7 @@ exports.isAuthenticated = (req, res, next) => {
   }
   else {
     res.redirect('/login');
+    next();
   }
 }
 
@@ -13,7 +14,7 @@ exports.loginPage = (req, res) => {
   res.render('login');
 }
 
-exports.login = passport.authenticate('local', {
+exports.login = passport.authenticate('google', {
   failureRedirect: '/login',
   failureFlash: 'LOGIN FAILURE!',
   successRedirect: '/',
