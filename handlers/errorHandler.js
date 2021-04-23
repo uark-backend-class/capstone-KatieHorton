@@ -1,5 +1,5 @@
-exports.catchErrors = (func) = {
-    return function(req, res, next) {
+exports.catchErrors = (func) => {
+    return (req, res, next) => {
         return func(req, res, next).catch(next);
     }
 };

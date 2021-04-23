@@ -23,11 +23,6 @@ exports.addProvider = async (req, res, next) => {
 next();
 };
 
-exports.getProviders = async(req, res) => {
-  providers = await Provider.find({{}});
-  res.send([providers]);
-};
-
 exports.deleteProvider = async (req, res) => {
   await Provider.findByIdAndDelete(req.params.id);
   req.flash('info', 'Provider Deleted!');
@@ -70,22 +65,26 @@ exports.addComment = async (req, res) => {
 //FIND BY SPECIALTY
 
 exports.findBySpecialty= async(req, res) => {
-    let specialist = await Provider.find.where('specialty').equals(req.query.params); 
+    let specialist = await Provider.find.where('specialty').equals(req.query.params);
     if (!specialist) return next();
     res.render('search', { title: specialist.name });
 
 };
 
 exports.findBySpecialtyPage = async (req, res) => {
-  const specialty = req.params.specialty;
-  const providerQuery = specialty || { $exists: true, $ne: [] };
+  console.log(req.query);
 
-  const specialtyPromise = Provider.findBySpecialty();
-  const providerPromise = Provider.find({ specialty: providerQuery});
-  const [specialties, providers] = await Promise.all([providerPromise, specialtyPromise]);
-
-
-  res.render('specialty', { specialties, title: 'Specialists', specialty, providers });
+  // If there are query parameters, then someone has submitted the search
+  // form from the search page. Find the providers by specialty and show on the page.
+  if (req.query && req.query.specialty && req.query.specialty.length > 0) {
+    // TODO: do a search by specialty and get a list of providers
+    let providers = await Provider.find({});
+    res.render('search', { providers });
+  }
+  else {
+    // No search yet, just display the search form and no providers.
+    res.render('search');
+  }
 };
 
 

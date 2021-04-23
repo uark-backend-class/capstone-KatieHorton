@@ -4,7 +4,7 @@ const router = express.Router();
 const user = require('../controllers/user.controller');
 const auth = require('../controllers/auth.controller');
 const passport = require('passport');
-const {handleError} = require('../handlers/errorHandler');
+const { catchErrors: handleError} = require('../handlers/errorHandler');
 
 router.get('/register', auth.registrationPage);
 router.post('/register', handleError(user.register, auth.login));
@@ -20,7 +20,7 @@ function(req, res, ) {
 
 res.redirect('/');
 });
-  
+
 //passport.use('isAuth', auth.isAuthenticated());
 router.get('/', provider.listProvidersPage);
 router.get('/specialty', provider.findBySpecialtyPage);
@@ -37,7 +37,7 @@ router.get('/secrets', auth.isAuthenticated, (req, res) =>
 router.get('/logout', auth.logout);
 
 router.get('/account', auth.isAuthenticated, user.account);
-router.posthandleError(('/account', user.updateAccount));
+// router.posthandleError(('/account', user.updateAccount));
 
 
 module.exports = router;

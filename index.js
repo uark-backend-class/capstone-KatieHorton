@@ -3,7 +3,6 @@ const app = express();
 const routes = require('./routes');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
-const bodyParser = require('body-parser');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
 const { googleOAuthId, googleSecret } = require('./config/dev');
@@ -57,8 +56,8 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
+app.use(express.json());
+app.use(express.urlencoded({
   extended: true
 }));
 

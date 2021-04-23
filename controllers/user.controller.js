@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-mo
 const User = require("../models/user.model")
 
 exports.isAuthenticated = (req, res) => {
@@ -26,17 +25,17 @@ exports.register = async (req, res, next) => {
     req.checkBody('password', 'Password Cannot be Blank!').notEmpty();
     req.checkBody('password-confirm', 'Really, Password cannot be blank!').notEmpty();
     req.checkBody('password-confirm', 'Passwords must match!').equals(req.body.password);
-  
+
     const errors = req.validationErrors();
     if (errors) {
       req.flash('error', errors.map(err => err.msg));
       res.render('register', { title: 'Register', body: req.body, flashes: req.flash() });
-      return; 
+      return;
     }
 
     next();
   }
-};  
+};
 
 exports.account = (req, res) => {
   res.render('account', { title: 'Edit Your Account' });
