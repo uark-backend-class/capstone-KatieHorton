@@ -23,8 +23,8 @@ res.redirect('/');
 
 //passport.use('isAuth', auth.isAuthenticated());
 router.get('/', provider.listProvidersPage);
-router.get('/specialty', provider.findBySpecialtyPage);
-router.post('/specialty/:specialty', handleError(provider.findBySpecialty));
+router.get('/profession', provider.findBySpecialtyPage);
+router.post('/profession/:profession', handleError(provider.findByProfession));
 router.get('/add', provider.addUpdateProviderPage);
 router.post('/addProvider', handleError(provider.addProvider));
 router.get('/update/:id', handleError(provider.addUpdateProviderPage));

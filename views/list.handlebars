@@ -15,21 +15,26 @@
 <h2>{{header}}</h2>
 
 <p>
-  <a href= "/specialty">Search by services</a>
+  <a href= "/profession">Search by Profession</a>
 </p>
 
 <table>
   <tr>
     <th>Name</th>
-    <th>Specialty</th>
+    <th>Profession</th>
+    <th>Specialties</th>
+    <th>Request Appointment</th>
+    <th>Edit</th>
+    <th>Delete</th>
 
   </tr>
   {{#each providers}}
   <tr>
     <td>{{this.name}}</td>
+    <td>{{this.profession}}</td></tc>
     <td>{{this.specialty}}</td>
 
-    <td><a href ="mailto:{{this.contact.email}}" > Request Appointment </a></td>
+    <td><a href ="mailto:{{this.contact.email}}" > Email </a></td>
     <td><a href="/update/{{this._id}}"> Edit </a></td>
     <td><a href="/delete/{{this._id}}"> Delete </a></td>
   </tr>

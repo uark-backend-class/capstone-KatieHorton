@@ -1,5 +1,5 @@
 {
-  "name": "capstone-KatieHorton",
+  "name": "capstone-katiehorton",
   "version": "1.0.0",
   "description": "Final Project",
   "main": "index.js",
@@ -20,6 +20,7 @@
   "homepage": "https://github.com/uark-backend-class/capstone-KatieHorton#readme",
   "dependencies": {
     "assert": "^2.0.0",
+    "axios": "^0.21.1",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^4.4.1",
     "express": "^4.17.1",
@@ -27,9 +28,16 @@
     "express-session": "^1.17.1",
     "mongoose": "^5.12.0",
     "nodemailer": "^6.5.0",
+    "nodemon": "^2.0.7",
     "passport": "^0.4.1",
     "passport-github2": "^0.1.12",
     "passport-google-oauth20": "^2.0.0",
     "passport-local-mongoose": "^6.1.0"
+  },
+  "bin": {
+    "capstone-katiehorton": "www.js"
+  },
+  "directories": {
+    "test": "tests"
   }
 }

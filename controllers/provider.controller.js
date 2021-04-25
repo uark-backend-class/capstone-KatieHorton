@@ -37,7 +37,7 @@ exports.listProvidersPage = async (req, res) => {
 
   let email = req.User ? req.User.email : 'Not logged in';
 
-  res.render("list", { header: mainHeader, providers, email });
+  res.render('list', { header: mainHeader, providers, email });
 };
 
 //ADD UPDATE PAGE
@@ -45,7 +45,7 @@ exports.addUpdateProviderPage = async (req, res, next) => {
   if (req.params.id) {
     let provider = await Provider.findById(req.params.id).lean();
 
-    res.render("addUpdate", { provider });
+    res.render('addUpdate', { provider });
   } else {
     res.render('addUpdate');
   }
@@ -64,30 +64,30 @@ exports.addComment = async (req, res) => {
 
 //FIND BY SPECIALTY
 
-exports.findBySpecialty= async(req, res) => {
-    let specialist = await Provider.find.where('specialty').equals(req.query.params);
-    if (!specialist) return next();
-    res.render('search', { title: specialist.name });
 
-};
 
-exports.findBySpecialtyPage = async (req, res) => {
+exports.findByProfession = async (req, res) => {
   console.log(req.query);
 
   // If there are query parameters, then someone has submitted the search
   // form from the search page. Find the providers by specialty and show on the page.
-  if (req.query && req.query.specialty && req.query.specialty.length > 0) {
+  if (req.query && req.query.profession && req.query.profession.length > 0) {
     // TODO: do a search by specialty and get a list of providers
-    let providers = await Provider.find({});
-    res.render('search', { providers });
+    let option = req.query.profession
+    let providers = await Providers.find().populate({
+    path: 'profession/:profession',
+    match: { 'profession': { option } },
+
+    select: 'name profession specialty'
+  }).exec();
+    res.render('list', {  providers });
   }
   else {
     // No search yet, just display the search form and no providers.
     res.render('search');
+
   }
 };
 
 
-/*
-https://www.affirmations.dev/
-*/
+
