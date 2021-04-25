@@ -4,6 +4,7 @@ const User = require('../models/user.model');
 // CREATE/UPDATE
 exports.addProvider = async (req, res, next) => {
   console.log(req.body.name);
+  console.log(req.body.profession);
   console.log(req.body.specialty);
   console.log(req.body.email);
   console.log(req.body.password);
@@ -22,6 +23,11 @@ exports.addProvider = async (req, res, next) => {
   }
 next();
 };
+
+exports.getAll = async(req, res) => {
+  const allProviders = await Provider.find({});
+  console.log([allProviders]);
+}
 
 exports.deleteProvider = async (req, res) => {
   await Provider.findByIdAndDelete(req.params.id);
@@ -62,32 +68,27 @@ exports.addComment = async (req, res) => {
 };
 */
 
-//FIND BY SPECIALTY
-
+//FIND BY PROFESSION
+exports.findProfessionPage = (req, res) => {
+  res.render('search');
+}
 
 
 exports.findByProfession = async (req, res) => {
-  console.log(req.query);
+  console.log(req.body);
 
-  // If there are query parameters, then someone has submitted the search
-  // form from the search page. Find the providers by specialty and show on the page.
-  if (req.query && req.query.profession && req.query.profession.length > 0) {
-    // TODO: do a search by specialty and get a list of providers
-    let option = req.query.profession
-    let providers = await Providers.find().populate({
-    path: 'profession/:profession',
-    match: { 'profession': { option } },
+ //query db
+try{
 
-    select: 'name profession specialty'
-  }).exec();
-    res.render('list', {  providers });
-  }
-  else {
-    // No search yet, just display the search form and no providers.
-    res.render('search');
+ const professionals =  await Provider.find({profession: {'$in': req.body.professions} })
+ return res.send(professionals);
+} catch(error) {
+  console.log(error);
+  return res.status(500);
+}
+  // res.render('profession', { professions, title: 'Professionals', profession, providers});
 
-  }
+
 };
 
-
-
+//have data you want

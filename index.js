@@ -11,6 +11,9 @@ const User = require('./controllers/user.controller');
 const port = 3000;
 require('./db');
 
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
 passport.use(new GoogleStrategy({
   clientID: googleOAuthId,
   clientSecret: googleSecret,

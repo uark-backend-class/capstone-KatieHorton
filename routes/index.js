@@ -23,11 +23,15 @@ res.redirect('/');
 
 //passport.use('isAuth', auth.isAuthenticated());
 router.get('/', provider.listProvidersPage);
-router.get('/profession', provider.findBySpecialtyPage);
-router.post('/profession/:profession', handleError(provider.findByProfession));
+router.get('/', provider.getAll);
+
 router.get('/add', provider.addUpdateProviderPage);
-router.post('/addProvider', handleError(provider.addProvider));
-router.get('/update/:id', handleError(provider.addUpdateProviderPage));
+router.post('/addProvider', provider.addProvider);
+router.get('/update/:id', provider.addUpdateProviderPage);
+
+router.get('/profession', provider.findProfessionPage);
+router.post('/getProfession', provider.findByProfession);
+
 router.get('/delete/:id', provider.deleteProvider);
 router.get('/secrets', auth.isAuthenticated, (req, res) =>
   res.send('Mental health matters.')
