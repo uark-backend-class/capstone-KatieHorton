@@ -21,19 +21,13 @@ exports.addProvider = async (req, res, next) => {
     await provider.save();
     req.flash("info", "Provider Added!");
   }
-next();
+res.redirect('/');
 };
 
 exports.getAll = async(req, res) => {
   const allProviders = await Provider.find({});
   console.log([allProviders]);
 }
-
-exports.deleteProvider = async (req, res) => {
-  await Provider.findByIdAndDelete(req.params.id);
-  req.flash('info', 'Provider Deleted!');
-  res.redirect("/");
-};
 
 //LIST PROVIDERS PAGE
 exports.listProvidersPage = async (req, res) => {
@@ -47,7 +41,7 @@ exports.listProvidersPage = async (req, res) => {
 };
 
 //ADD UPDATE PAGE
-exports.addUpdateProviderPage = async (req, res, next) => {
+exports.addUpdateProviderPage = async (req, res) => {
   if (req.params.id) {
     let provider = await Provider.findById(req.params.id).lean();
 
@@ -55,7 +49,7 @@ exports.addUpdateProviderPage = async (req, res, next) => {
   } else {
     res.render('addUpdate');
   }
-  next();
+
 };
 /*
 exports.addComment = async (req, res) => {
@@ -89,6 +83,11 @@ try{
   // res.render('profession', { professions, title: 'Professionals', profession, providers});
 
 
+};
+exports.deleteProvider = async (req, res) => {
+  await Provider.findByIdAndDelete(req.params.id);
+  req.flash('info', 'Provider Deleted!');
+  res.redirect("/");
 };
 
 //have data you want

@@ -13,32 +13,7 @@ exports.isAuthenticated = (req, res, next) => {
   }
 };
 
-router.post('/register', (req, res, next) => {
-  User.register(new User({
-      username: req.body.email
-    }),
-    req.body.password, (err, user) => {
-      if (err) {
-        res.statusCode = 500;
-        res.json({
-          err: err
-        });
-      } else {
-        passport.authenticate('/users/:email')(req, res, () => {
-          User.find({
-            username: req.body.email
-          }, (err,user) => {
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'application/json');
-            res.json({
-              success: true,
-              status: 'Registration Success!',
-            });
-          });
-        })
-      }
-    })
-});
+
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
     User.find({

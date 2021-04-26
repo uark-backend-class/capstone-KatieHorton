@@ -3,20 +3,13 @@ const passportLocalMongoose = require("passport-local-mongoose");
 
 
 const userSchema = new mongoose.Schema({
-  email: {
-        type: String,
-        lowercase: true,
-        trim: true,
-        required: 'Please enter an email address'
-      },
-  name: String,
-  googleId: String,
-  resetPasswordToken: String,
-  resetPasswordExpires: Date,
+  email: String,
+  password: String,
+  displayName: String,
+
   created: { type: Date, default: Date.now }
     },
       { timestamps: true }
-
 );
 
 userSchema.plugin(passportLocalMongoose, { usernameField: "email" });
