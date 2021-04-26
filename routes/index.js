@@ -4,42 +4,39 @@ const router = express.Router();
 const user = require('../controllers/user.controller');
 const auth = require('../controllers/auth.controller');
 const passport = require('passport');
-const { catchErrors: handleError} = require('../handlers/errorHandler');
+const {GITHUB_REDIRECT_URI, GITHUB_URI} = require('../config/dev');
 
-// router.get('/register', auth.registrationPage);
-// router.post('/register', handleError(user.register, auth.login));
-// router.get('/login', auth.loginPage);
-// router.post('/login', auth.login);
+//AUTH
+router.get('/login', auth.loginPage);
+router.post('/login', auth.login);
+router.get('/register', auth.registrationPage);
+router.post('/register', user.register, auth.login);
+router.get('/github', passport.authenticate('github', { 
+  clientId: GITHUB_URI,
+  scope: ['user:email'] }))
+router.get(GITHUB_REDIRECT_URI, passport.authenticate('github', {
+  failureRedirect: '/login',
+  successRedirect: '/',
+  successFlash: 'Login successful!'
+}));
 
-
-//passport.use('isAuth', auth.isAuthenticated());
+router.use('isAuth', user.isAuthenticated);
+//LIST
 router.get('/', provider.listProvidersPage);
-
-
-// router.get('/google', passport.authenticate('google', {
-//   scope: ['profile', 'email']
-// }))
-// router.get('/auth/google/redirect', passport.authenticate('google',
-// { failureRedirect: '/login' }),
-// function(req, res) {
-//   // Successful authentication, redirect home.
-//   res.redirect('/');
-// });
-
+//ADD-UPDATE
 router.get('/add', provider.addUpdateProviderPage);
 router.post('/addProvider', provider.addProvider);
 router.get('/update/:id', provider.addUpdateProviderPage);
-
+//FIND BY PROFESSION
 router.get('/profession', provider.findProfessionPage);
 router.post('/getProfession', provider.findByProfession);
-
+//DELETE
 router.get('/delete/:id', provider.deleteProvider);
 router.get('/secrets', auth.isAuthenticated, (req, res) =>
   res.send('Mental health matters.')
 );
-
-
-router.get('/logout', auth.logout);
+//
+router.get('/logout', user.logout);
 
 //router.get('/account', auth.isAuthenticated, user.account);
 // router.posthandleError(('/account', user.updateAccount));

@@ -3,13 +3,45 @@ const routes = require('./routes');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
 const passport = require('passport');
-const {google} = require('googleapis');
-const GoogleStrategy = require('passport-google-oauth20');
-const { googleOAuthId, googleSecret } = require('./config/dev');
+const GithubStrategy = require('passport-github2');
+//const GoogleStrategy = require('passport-google-oauth20');
+const { GITHUB_CLIENT_ID, GITHUB_SECRET, GITHUB_REDIRECT_URI } = require('./config/dev');
 const flash = require('connect-flash');
 const User = require('./controllers/user.controller');
 const port = 3000;
 require('./db');
+
+passport.use(
+  new GithubStrategy(
+    {
+      clientId: GITHUB_CLIENT_ID,
+      clientSecret: GITHUB_SECRET,
+      callback_uri: GITHUB_REDIRECT_URI
+    
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        const user = await User.findOne({ clientId: profile.id });
+
+        if (user) {
+          return done(null, user);
+        } else {
+          const newUser = new User({
+            email: profile.email,
+            name: profile.displayName,
+            githubId: profile.id,
+          });
+
+          await newUser.save();
+
+          done(null, newUser);
+        }
+      } catch (error) {
+        done(error);
+      }
+    }
+  )
+);
 
 // passport.use(new GoogleStrategy({
 //   clientID: googleOAuthId,
@@ -32,17 +64,17 @@ require('./db');
 //   }
 // }));
 
-// passport.use(User.createStrategy());
-// passport.authenticate('./local/localAuth.');
+passport.use(User.createStrategy());
+passport.authenticate('./local/localAuth.');
 
-// passport.serializeUser((user, done) => {
-//   done(null, user._id);
-// });
+passport.serializeUser((user, done) => {
+  done(null, user._id);
+});
 
-// passport.deserializeUser(async (id, done) => {
-//   const user = await User.findById(id, "name email _id");
-//   done(null, user);
-// });
+passport.deserializeUser(async (id, done) => {
+  const user = await User.findById(id, "name email _id");
+  done(null, user);
+});
 const app = express();
 
 app.use(express.json());

@@ -1,0 +1,15 @@
+<h1>Add a Provider</h1>
+<form action="/addProvider", method="POST">
+  <p>
+    Name <input type="text" name="name" value="{{ provider.name }}" /><br />
+    Profession <input type="text" name="profession" value="{{ provider.prfession }}" /><br />
+    Specialty <input type="text" name="specialty" value="{{ provider.specialty }}" /><br />
+    email <input type="email" name="phone" value="{{ provider.email }}" /><br />
+    Password <input type="password" name="password" value="{{provider.password}}" /><br />
+    Phone <input type="tel" name="phone" value="{{ provider.phone }}" /><br />
+    Address <input type="text" name="address" value="{{ provider.address}}" /><br />
+
+    <input type="hidden" name="id" value="{{ provider._id }}" /> <br />
+    <button type="submit">Add Povider</button>
+  </p>
+</form>

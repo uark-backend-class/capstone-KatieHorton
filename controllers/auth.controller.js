@@ -1,5 +1,4 @@
 const passport = require('passport');
-const user = require('../models/user.model');
 
 exports.isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -8,7 +7,8 @@ exports.isAuthenticated = (req, res, next) => {
   else {
     res.redirect('/login');  
   }
-}
+};
+
 
 exports.loginPage = (req, res) => {
   res.render('login');
@@ -16,23 +16,16 @@ exports.loginPage = (req, res) => {
 
 exports.login = passport.authenticate('local', {
   failureRedirect: '/login',
-  failureFlash: 'LOGIN FAILURE!',
+  failureFlash: 'Failed login!',
   successRedirect: '/',
-  successFlash: 'Great Success!'
+  successFlash: 'You are now logged in!'
 });
 
 exports.registrationPage = (req, res) => {
   res.render('register');
-}
-
-exports.register = async(req, res, next) => {
-  const user = new User({ email: req.body.email });
-  await user.register(user, req.body.password);
-
-  next(); 
-}
+};
 
 exports.logout = (req, res) => {
   req.logout();
   res.redirect('/login');
-}
+};

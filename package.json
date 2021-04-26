@@ -12,7 +12,7 @@
     "url": "git+https://github.com/uark-backend-class/capstone-KatieHorton.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "KatieDevLady",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/uark-backend-class/capstone-KatieHorton/issues"
@@ -40,6 +40,6 @@
     "capstone-katiehorton": "www.js"
   },
   "directories": {
-    "test": "tests"
+    "test": "jest"
   }
 }
