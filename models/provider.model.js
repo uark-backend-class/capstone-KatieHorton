@@ -1,40 +1,17 @@
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
+const db = require('../db');
+
 
 //DEFINE SCHEMA
 const providerSchema = new mongoose.Schema({
-    name:  {
-        type: String,
-        //required: "please enter provider name",
-        maxlength: 100
-    },
-
+    name:  String,
     profession: String,
-
-    specialty: {
-        type: [String],
-        //required: "please enter provider specialty",
-        maxlength: 100
-    },
-    
-    email: {
-            type: String,
-            //required: "please enter provider email",
-            maxlength: 30
-        },
-    
-    phone: {
-            type: String,
-            //required: "please enter provider phone number",
-            maxlength: 10
-        },
-
-    address: {
-            type: String,
-            //required: "Please enter Practice address",
-            
-        },
-
+    specialty: [String],    
+    email: String,   
+    phone: String,
+    address: String,
+    password: String,
     comments: [
         {
             body: String,
@@ -45,7 +22,8 @@ const providerSchema = new mongoose.Schema({
 });
 
 
+const Provider = mongoose.model('Provider', providerSchema);
 
-//EXPORT PROVIDER MODEL
-module.exports = mongoose.model("Provider", providerSchema);
 
+  
+module.exports = Provider;  

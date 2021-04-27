@@ -4,7 +4,7 @@ const router = express.Router();
 const user = require('../controllers/user.controller');
 const auth = require('../controllers/auth.controller');
 const passport = require('passport');
-const {GITHUB_REDIRECT_URI, GITHUB_URI} = require('../config/dev');
+const {GITHUB_REDIRECT_URI, GITHUB_CLIENT_ID} = require('../config/dev');
 
 //AUTH
 router.get('/login', auth.loginPage);
@@ -12,7 +12,7 @@ router.post('/login', auth.login);
 router.get('/register', auth.registrationPage);
 router.post('/register', user.register, auth.login);
 router.get('/github', passport.authenticate('github', { 
-  clientId: GITHUB_URI,
+  clientId: GITHUB_CLIENT_ID,
   scope: ['user:email'] }))
 router.get(GITHUB_REDIRECT_URI, passport.authenticate('github', {
   failureRedirect: '/login',
@@ -20,13 +20,19 @@ router.get(GITHUB_REDIRECT_URI, passport.authenticate('github', {
   successFlash: 'Login successful!'
 }));
 
-router.use('isAuth', user.isAuthenticated);
+//router.use('isAuth', user.isAuthenticated);
 //LIST
+
 router.get('/', provider.listProvidersPage);
+
 //ADD-UPDATE
 router.get('/add', provider.addUpdateProviderPage);
 router.post('/addProvider', provider.addProvider);
 router.get('/update/:id', provider.addUpdateProviderPage);
+//FIND ONE BY ID
+router.get('/profile', provider.profilePage);
+router.post('/profile', provider.getAll);
+router.get('/profile/:id', provider.profilePage);
 //FIND BY PROFESSION
 router.get('/profession', provider.findProfessionPage);
 router.post('/getProfession', provider.findByProfession);
@@ -35,11 +41,10 @@ router.get('/delete/:id', provider.deleteProvider);
 router.get('/secrets', auth.isAuthenticated, (req, res) =>
   res.send('Mental health matters.')
 );
-//
+
 router.get('/logout', user.logout);
 
 //router.get('/account', auth.isAuthenticated, user.account);
 // router.posthandleError(('/account', user.updateAccount));
-
 
 module.exports = router;

@@ -7,21 +7,22 @@ const GithubStrategy = require('passport-github2');
 //const GoogleStrategy = require('passport-google-oauth20');
 const { GITHUB_CLIENT_ID, GITHUB_SECRET, GITHUB_REDIRECT_URI } = require('./config/dev');
 const flash = require('connect-flash');
-const User = require('./controllers/user.controller');
+const User = require('./models/user.model');
+
 const port = 3000;
 require('./db');
 
 passport.use(
   new GithubStrategy(
     {
-      clientId: GITHUB_CLIENT_ID,
+      clientID: GITHUB_CLIENT_ID,
       clientSecret: GITHUB_SECRET,
-      callback_uri: GITHUB_REDIRECT_URI
+      callbackURI: GITHUB_REDIRECT_URI
     
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        const user = await User.findOne({ clientId: profile.id });
+        const user = await User.findOne({ clientId: profile._id });
 
         if (user) {
           return done(null, user);
@@ -65,7 +66,6 @@ passport.use(
 // }));
 
 passport.use(User.createStrategy());
-passport.authenticate('./local/localAuth.');
 
 passport.serializeUser((user, done) => {
   done(null, user._id);

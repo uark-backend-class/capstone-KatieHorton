@@ -1,0 +1,33 @@
+
+<form id="profile" action="/profile" method="GET">
+    <div class="top">
+        <h2>{{profile.name}} Profile Page</h2>
+        <h3>{{profile.profession}}</h3>
+    </div>
+
+    <div class="moreInfo">
+        <ul>
+            <li>{{profile.phone}}</li>
+            <li>{{profile.address}}</li>
+        </ul>
+        <p>
+            {{[profile.[specialty]}}
+        </p>
+    </div>
+
+    <div class="comments">
+        <p>
+            {{profile.[comments]}}
+        </p>
+        <div class="commentButton">
+            <button class="btn btn-primary" type="submit">Add your review</button>
+        </div>
+        <a href="/update/{{profile._id}}">Update Provider</a>
+    </div>
+
+    <div class="hide" hidden>
+        <p>
+            {{profile._id}}
+        </p>
+    </div>
+</form>

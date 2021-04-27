@@ -5,15 +5,15 @@
 {{/each}}
 {{/if}}
 
-<a href="/login">Login</a><br />
+<div id="isAuthenticated">
+{{#if req.User.isAuthenticated}}<a href="/logout">logout of {{user.name}}</a>{{else}}<a href="/login">login</a>{{/if}}
+</div>
 
-<p>
-  <a href="/add">
-    <h1>{{#if provider}}Update{{else}}Add{{/if}} a provider</h1>
-  </a>
-</p>
+<h2>
+  <a href="/add">Add a Provider</a>
+</h2>
 
-<h2>{{header}}</h2>
+<h1>{{header}}</h1>
 
 <p>
   <a href= "/profession">Search by Profession</a>
@@ -23,7 +23,8 @@
   <tr>
     <th>Name</th>
     <th>Profession</th>
-    <th>Specialties</th>
+    <th>Specialty</th>
+    <th>Phone</th>
     <th>Request Appointment</th>
     <th>Edit</th>
     <th>Delete</th>
@@ -32,13 +33,22 @@
   {{#each providers}}
   <tr>
     <td>{{this.name}}</td>
-    <td>{{this.profession}}</td></tc>
+    <td>{{this.profession}}</td></td>
     <td>{{this.specialty}}</td>
-
-    <td><a href ="mailto:{{this.contact.email}}" > Email </a></td>
+    <td>{{this.phone}}</td>
+  
+    
+    <td><button class="btn btn-secondary" type="submit" > Send Info </button></td>
     <td><a href="/update/{{this._id}}"> Edit </a></td>
     <td><a href="/delete/{{this._id}}"> Delete </a></td>
-  </tr>
+    </tr>
+
+    <div class="info" hidden>
+      <p>{{this.password}}</p>
+      <p>{{this.email}}</p>
+      <p>{{this.address}}</p>
+      </div>
+
   {{/each}}
 </table>
 
