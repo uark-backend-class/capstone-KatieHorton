@@ -3,12 +3,11 @@
   <p>
     name <input type="text" name="name" value="{{provider.name}}" /><br />
     profession <input type="text" name="profession" value="{{provider.profession}}" /><br />
-    specialty <input type="text" name="specialty" value="{{provider.specialties}}" /><br />
+    specialty <input type="text" name="specialty" value="[{{provider.specialties}}]" /><br />
     email <input type="email" name="email" value="{{provider.email}}" /><br />
     phone <input type="tel" name="phone" value="{{provider.phone}}" /><br />
     address <input type="text" name="address" value="{{provider.address}}" /><br />
     password <input type="password" name="password" value="{{provider.password}}" /><br />
-
     <input type="hidden" name="id" value="{{ provider._id }}" /> <br />
     <button id="addButton" type="submit">{{#if provider}}Update{{else}}Add{{/if}} Provider</button>
   </p>

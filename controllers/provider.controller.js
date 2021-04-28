@@ -1,12 +1,18 @@
 const Provider = require('../models/provider.model');
 const User = require('../models/user.model');
 const mongoose = require('mongoose');
+const handleError = require('../handlers/errorHandler');
+const { findById } = require('../models/provider.model');
+const transport = require('../communication/email/nodemailer');
+const flashes = require('connect-flash');
+
+
 
 // CREATE/UPDATE
 exports.addProvider = async (req, res) => {
   console.log(req.body.name);
   console.log(req.body.profession);
-  console.log([req.body.specialties]);
+  console.log(req.body.specialties);
   console.log(req.body.email);
   console.log(req.body.phone);
   console.log(req.body.address);
@@ -14,10 +20,10 @@ exports.addProvider = async (req, res) => {
 
   if (req.body.id) {
     let provider = await Provider.findByIdAndUpdate(req.body.id, req.body).lean();
-    await provider.save();
+    console.log(req.body);
     req.flash('info', 'Provider Updated');
-
-  } else {
+    }
+    else {
     let provider = new Provider(req.body);
     await provider.save();
     req.flash('info', 'provider added!');
@@ -38,21 +44,20 @@ exports.listProvidersPage = async (req, res) => {
 
   let email = req.User ? req.User.email : 'Not logged in';
 
-  res.render('list', { header: mainHeader, providers, email });
+  res.render('list', { header: mainHeader, providers, email, flashes });
 };
 
 //ADD UPDATE PAGE
 exports.addUpdateProviderPage = async (req, res) => {
   if (req.params.id) {
     let provider = await Provider.findById(req.params.id).lean();
-    res.render('addUpdate', { provider });
+    res.render('addUpdate', { provider, flashes });
   } else {
     res.render('addUpdate');
   }
 };
 
 
-//PROFILE PAGE
 exports.getOne = async(req, res) => {
   const foundProvider = await Provider.findById(req.params.id);
   if(!foundProvider) {
@@ -69,36 +74,57 @@ exports.profilePage = async(req, res) => {
   const profile = await Provider.findById(req.params.id).lean();
   res.render('profile', {header: mainHeader, profile});
 };
-/*
+
+//REQUEST INFO
+exports.requestInfo = async(req, res) => {
+  let provider = await Provider.findById(req.params.id).lean();
+    let mail = req.body;
+    transport.sendMail(mail);
+    req.flash('info', { provider, message, flashes});
+};
+exports.request = async(req, res) => {
+  let mainHeader = 'Request Information';
+  let provider = await Provider.findById(req.params.id).lean();
+  //let name = provider.name;
+    //send info with modemailer
+  res.render('requestInfo', {header: mainHeader, provider, flashes });
+  };
+
+
+
+
+//COMMENTS
 exports.addComment = async (req, res) => {
   let provider = await Provider.findById(req.params.id).lean();
 
-  // pseudo code, need to get the comment test
-  provider.comments.push({ body: 'test comment', date: new Date(), author: req.user._id });
+  provider.comments.push({ body: 'test comment', date: Date.now(), author: req.user._id });
+  let comment = Provider.comments[0];
+  console.log(comment);
 
-  res.redirect(`/providers/?id=${req.params.id}`);
+  provider.save(function (err) {
+    if (err) return handleError(err)
+    console.log('Success!');
+  });
+  req.flash('info', 'comment added!');
+  res.redirect(`/profile/${req.params.id}`);
 };
 
-  function logSubmit(event) {
-    log.textContent = `Form Submitted! Time stamp: ${event.timeStamp}`;
-    event.preventDefault();
-  }
-
-  const form = document.getElementById('form');
-  const log = document.getElementById('log');
-  form.addEventListener('submit', logSubmit);
+exports.deleteComment = async(req, res) => {
+  let comment = await Provider.comments.id(_id).remove();
+  comment.remove();
+  Provider.save(function (err) {
+      if (err) return handleError(err);
+      req.flash('info', 'comment removed');
+  })
 };
-
-*/
 
 //FIND BY PROFESSION
 exports.findProfessionPage = (req, res) => {
   res.render('search');
-}
+};
 
 exports.findByProfession = async (req, res) => {
 
-  //query db
   try {
     const professionals = await Provider.find({
       profession: { $in: req.body.professions },
@@ -108,8 +134,8 @@ exports.findByProfession = async (req, res) => {
     console.log(error);
     return res.status(500);
   }
-  // res.render('profession', { professions, title: 'Professionals', profession, providers});
-}
+
+};
 
 exports.deleteProvider = async (req, res) => {
   let provider = await Provider.findByIdAndDelete(req.params.id);

@@ -15,7 +15,7 @@
             <li>{{profile.phone}}</li>
             <li>{{profile.address}}</li>
         </ul>
-
+        <a href="/request">Request More Information</a>
     </div>
 
     <div class="comments">
@@ -23,13 +23,9 @@
         <p>
             {{profile.comments}}
         </p>
-        <div class="commentButton">
-            <button class="btn btn-secondary" type="submit">Add your review</button>
-        </div>
-        <div class="appointmentButton">
-            <button class="btn btn-primary" type="submit">Request Information</button>
-        </div>
 
+    </div>
+    <div>
         <a href="/update/{{profile._id}}">Update Provider</a>
         <a href="/delete/{{profile._id}}">Delete Provider</a>
     </div>

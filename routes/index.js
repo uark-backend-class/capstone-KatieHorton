@@ -31,8 +31,12 @@ router.post('/addProvider', provider.addProvider);
 router.get('/update/:id', provider.addUpdateProviderPage);
 //FIND ONE BY ID
 router.get('/profile', provider.profilePage);
-router.post('/profile', provider.getAll);
+router.post('/profile', provider.getOne);
 router.get('/profile/:id', provider.profilePage);
+//REQUEST INFORMATION
+router.get('/request', provider.request);
+router.post('/requestInfo', provider.getOne);
+router.get('/requestInfo/:id', provider.requestInfo);
 //FIND BY PROFESSION
 router.get('/profession', provider.findProfessionPage);
 router.post('/getProfession', provider.findByProfession);
