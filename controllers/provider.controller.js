@@ -1,12 +1,12 @@
-const Provider = require("../models/provider.model");
-const User = require("../models/user.model");
-const mongoose = require("mongoose");
+const Provider = require('../models/provider.model');
+const User = require('../models/user.model');
+const mongoose = require('mongoose');
 
 // CREATE/UPDATE
 exports.addProvider = async (req, res) => {
   console.log(req.body.name);
   console.log(req.body.profession);
-  console.log(req.body.specialty);
+  console.log([req.body.specialties]);
   console.log(req.body.email);
   console.log(req.body.phone);
   console.log(req.body.address);
@@ -15,14 +15,14 @@ exports.addProvider = async (req, res) => {
   if (req.body.id) {
     let provider = await Provider.findByIdAndUpdate(req.body.id, req.body).lean();
     await provider.save();
-    req.flash("info", "Provider Update Error!");
+    req.flash('info', 'Provider Updated');
+
   } else {
     let provider = new Provider(req.body);
-    console.log(req.body);
     await provider.save();
-    req.flash("info", `${provider} updated!`);
+    req.flash('info', 'provider added!');
   }
-  res.redirect('/add');
+  res.redirect('/');
 };
 
 // PROVIDER LIST PAGE
@@ -32,22 +32,22 @@ exports.getAll = async (req, res) => {
 };
 
 exports.listProvidersPage = async (req, res) => {
-  let mainHeader = "Provider List";
+  let mainHeader = 'Provider List';
 
   let providers = await Provider.find({}).lean();
 
-  let email = req.User ? req.User.email : "Not logged in";
+  let email = req.User ? req.User.email : 'Not logged in';
 
-  res.render("list", { header: mainHeader, providers, email });
+  res.render('list', { header: mainHeader, providers, email });
 };
 
 //ADD UPDATE PAGE
 exports.addUpdateProviderPage = async (req, res) => {
   if (req.params.id) {
     let provider = await Provider.findById(req.params.id).lean();
-    res.render("addUpdate", { provider });
+    res.render('addUpdate', { provider });
   } else {
-    res.render("addUpdate");
+    res.render('addUpdate');
   }
 };
 
@@ -74,7 +74,7 @@ exports.addComment = async (req, res) => {
   let provider = await Provider.findById(req.params.id).lean();
 
   // pseudo code, need to get the comment test
-  provider.comments.push({ body: "test comment", date: new Date(), author: req.user._id });
+  provider.comments.push({ body: 'test comment', date: new Date(), author: req.user._id });
 
   res.redirect(`/providers/?id=${req.params.id}`);
 };
@@ -84,20 +84,19 @@ exports.addComment = async (req, res) => {
     event.preventDefault();
   }
 
-  const form = document.getElementById("form");
-  const log = document.getElementById("log");
-  form.addEventListener("submit", logSubmit);
+  const form = document.getElementById('form');
+  const log = document.getElementById('log');
+  form.addEventListener('submit', logSubmit);
 };
 
 */
 
 //FIND BY PROFESSION
 exports.findProfessionPage = (req, res) => {
-  res.render("search");
+  res.render('search');
 }
 
 exports.findByProfession = async (req, res) => {
-  console.log(req.body);
 
   //query db
   try {
@@ -114,6 +113,6 @@ exports.findByProfession = async (req, res) => {
 
 exports.deleteProvider = async (req, res) => {
   let provider = await Provider.findByIdAndDelete(req.params.id);
-  req.flash("info", "Provider Deleted!");
+  req.flash('info', 'provider deleted');
   res.redirect('/');
 };

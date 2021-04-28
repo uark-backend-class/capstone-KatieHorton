@@ -4,7 +4,7 @@ const router = express.Router();
 const user = require('../controllers/user.controller');
 const auth = require('../controllers/auth.controller');
 const passport = require('passport');
-const {GITHUB_REDIRECT_URI, GITHUB_CLIENT_ID} = require('../config/dev');
+env = require('../.env.js');
 
 //AUTH
 router.get('/login', auth.loginPage);
@@ -12,9 +12,9 @@ router.post('/login', auth.login);
 router.get('/register', auth.registrationPage);
 router.post('/register', user.register, auth.login);
 router.get('/github', passport.authenticate('github', { 
-  clientId: GITHUB_CLIENT_ID,
+  clientId: env.GITHUB_CLIENT_ID,
   scope: ['user:email'] }))
-router.get(GITHUB_REDIRECT_URI, passport.authenticate('github', {
+router.get(env.GITHUB_REDIRECT_URI, passport.authenticate('github', {
   failureRedirect: '/login',
   successRedirect: '/',
   successFlash: 'Login successful!'

@@ -5,20 +5,18 @@ const session = require('express-session');
 const passport = require('passport');
 const GithubStrategy = require('passport-github2');
 //const GoogleStrategy = require('passport-google-oauth20');
-const { GITHUB_CLIENT_ID, GITHUB_SECRET, GITHUB_REDIRECT_URI } = require('./config/dev');
 const flash = require('connect-flash');
 const User = require('./models/user.model');
-
 const port = 3000;
+const env = require('./.env.js');
 require('./db');
 
 passport.use(
   new GithubStrategy(
     {
-      clientID: GITHUB_CLIENT_ID,
-      clientSecret: GITHUB_SECRET,
-      callbackURI: GITHUB_REDIRECT_URI
-    
+      clientID: env.GITHUB_CLIENT_ID,
+      clientSecret: env.GITHUB_SECRET,
+      callbackURL: env.GITHUB_REDIRECT_URI
     },
     async (accessToken, refreshToken, profile, done) => {
       try {

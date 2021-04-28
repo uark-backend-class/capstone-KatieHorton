@@ -25,28 +25,24 @@
     <th>Profession</th>
     <th>Specialty</th>
     <th>Phone</th>
-    <th>Request Appointment</th>
-    <th>Edit</th>
-    <th>Delete</th>
+    <th>View Profile</th>
 
   </tr>
   {{#each providers}}
   <tr>
     <td>{{this.name}}</td>
     <td>{{this.profession}}</td></td>
-    <td>{{this.specialty}}</td>
+    <td>[{{this.specialty}}]</td>
     <td>{{this.phone}}</td>
-  
-    
-    <td><button class="btn btn-secondary" type="submit" > Send Info </button></td>
-    <td><a href="/update/{{this._id}}"> Edit </a></td>
-    <td><a href="/delete/{{this._id}}"> Delete </a></td>
+    <td><a href="/profile/{{this._id}}" > Profile </a></td>
+
     </tr>
 
     <div class="info" hidden>
       <p>{{this.password}}</p>
       <p>{{this.email}}</p>
       <p>{{this.address}}</p>
+      <p>{{this._id}}</p>
       </div>
 
   {{/each}}

@@ -7,7 +7,7 @@ const db = require('../db');
 const providerSchema = new mongoose.Schema({
     name:  String,
     profession: String,
-    specialty: [String],    
+    specialties: [String],   
     email: String,   
     phone: String,
     address: String,
@@ -15,11 +15,11 @@ const providerSchema = new mongoose.Schema({
     comments: [
         {
             body: String,
-            date: Date,
+            date: Date
         }
     ],
 
-});
+}, { versionKey: false } );
 
 
 const Provider = mongoose.model('Provider', providerSchema);
