@@ -8,14 +8,14 @@ const GithubStrategy = require('passport-github2');
 const flash = require('connect-flash');
 const User = require('./models/user.model');
 const port = 3000;
-const env = require('./process/.env.js');
+const process = require('./process');
 require('./db');
 
 passport.use(
   new GithubStrategy(
     {
-      clientID: env.GITHUB_CLIENT_ID,
-      clientSecret: env.GITHUB_SECRET,
+      clientID: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_SECRET,
       callbackURL: '/api/auth/github/callback'
     },
     async (accessToken, refreshToken, profile, done) => {
