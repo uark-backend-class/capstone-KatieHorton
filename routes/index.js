@@ -4,7 +4,7 @@ const router = express.Router();
 const user = require('../controllers/user.controller');
 const auth = require('../controllers/auth.controller');
 const passport = require('passport');
-env = require('../.env.js');
+env = require('../process/.env.js');
 
 //AUTH
 router.get('/login', auth.loginPage);

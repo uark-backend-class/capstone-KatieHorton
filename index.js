@@ -8,7 +8,7 @@ const GithubStrategy = require('passport-github2');
 const flash = require('connect-flash');
 const User = require('./models/user.model');
 const port = 3000;
-const env = require('./.env.js');
+const env = require('./process/.env.js');
 require('./db');
 
 passport.use(

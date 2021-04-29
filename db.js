@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const env = require('./.env');
+const env = require('./process/.env');
 
 mongoose.connect(env.URI, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.set('useFindAndModify', false);
