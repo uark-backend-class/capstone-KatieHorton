@@ -7,16 +7,16 @@ const GithubStrategy = require('passport-github2');
 //const GoogleStrategy = require('passport-google-oauth20');
 const flash = require('connect-flash');
 const User = require('./models/user.model');
-const port = 3000;
-const process = require('./process');
+const port = 5000;
+const env = require('./.env');
 require('./db');
 
 passport.use(
   new GithubStrategy(
     {
-      clientID: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_SECRET,
-      callbackURL: '/api/auth/github/callback'
+      clientID: env.GITHUB_CLIENT_ID,
+      clientSecret: env.GITHUB_SECRET,
+      callbackURL: 'http://localhost:3000/api/auth/github/callback'
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
